@@ -1,0 +1,51 @@
+
+public class PokemonMaker {
+
+	public static Pokemon makeWildPokemon() {
+
+		int wildPokemon = (int) (Math.random() * 8) + 1;
+
+		switch (wildPokemon) {
+		case 1: return new Pikachu();// pikachu
+			
+		case 2: return new Zapdos();// Zapdos
+	
+		case 3:return new Charmander();// Charmander
+			
+		case 4: return new Ponyta();// Ponyta
+		
+		case 5: return new Squirtle();// Aquirtle
+			
+		case 6: return new Staryu();// Staryu
+		
+		case 7: return new Bulbasaur();// bulbasaur
+		
+		case 8: return new Oddish();// Oddish
+		
+		default:
+			break;
+
+		}
+
+		return null;
+	}
+
+	public static Pokemon makeTypePokemon(int type) {
+		return null;
+	}
+
+	public static Pokemon makeStartPokemon(int trainerChoice) {
+		if (trainerChoice == 1) {
+			return new Charmander();
+		} else if (trainerChoice == 2) {
+			return new Squirtle();
+		} else if (trainerChoice == 3) {
+			return new Bulbasaur();
+		} else if (trainerChoice == 4) {
+			return new Pikachu();
+		}
+
+		return null;
+	}
+
+}

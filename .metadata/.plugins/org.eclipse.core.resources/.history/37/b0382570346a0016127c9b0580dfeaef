@@ -1,0 +1,9 @@
+
+public class PokemonMain {
+	
+	public static void Main(String args []){
+		Pokemon t = new Pokemon("ASH Ketchum", 3);
+		System.out.print("Hello" + t);
+	}
+	
+}

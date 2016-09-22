@@ -1,0 +1,82 @@
+/**
+ * Program creates a opponet and extends trainer
+ * 
+ * @author Jesus Vargas
+ *
+ */
+public class Opponent extends Trainer {
+
+	
+	private String attackSpeech = "";
+	private String looseSpeech ="";
+	private String winSpeech = "";
+	
+
+	/**
+	 * opponent constructor
+	 * 
+	 * @param name
+	 *            string name
+	 * @param hp
+	 *            String health
+	 * @param type
+	 *            String type of pokemon
+	 */
+	public Opponent(String name, int hp, String aS, String lS,String wS ) {
+		super(name, hp);
+		attackSpeech = aS;
+		looseSpeech = lS;
+		winSpeech = wS;
+		
+	}
+
+
+	/**
+	 * Attack speach method that opponet use
+	 */
+	@Override
+	void attackSpeach() {
+
+	}
+
+	/**
+	 * Win speach method for each opponent
+	 */
+	@Override
+	void winSpeach() {
+
+	}
+
+	/**
+	 * Loss speach methdod for each opponenet
+	 */
+	@Override
+	void lossSpeach() {
+
+		
+
+	}
+
+	/**
+	 * Choose style method chooses style of fight
+	 * 
+	 * @return integer style
+	 */
+	@Override
+	int chooseStyle() {
+		int style = (int) (Math.random() * 2) + 1;
+		return style;
+	}
+
+	/**
+	 * Choose move chooses fight move
+	 * 
+	 * @return integer move
+	 */
+	@Override
+	int chooseMove(int style) {
+		int move = (int) (Math.random() * 3) + 1;
+		return move;
+	}
+
+}

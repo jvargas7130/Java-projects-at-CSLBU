@@ -1,0 +1,45 @@
+
+public class Pikachu extends Pokemon implements Electric{
+	public Pikachu(){
+		super("Pikachu", 2);
+	}
+	
+	public void displaySpecialMenu(){
+		
+	}
+    
+	public int specialFIght(int move){
+		return 0;
+	}
+	
+
+	@Override
+	int getType() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	int specialFight(int move) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int thunderShock() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int thunderbolt() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int thunderPunch() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}

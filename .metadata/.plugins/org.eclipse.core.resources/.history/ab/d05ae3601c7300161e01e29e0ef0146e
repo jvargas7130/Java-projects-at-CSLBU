@@ -1,0 +1,48 @@
+/**
+ * Charmander class has all the attributes of charmander 
+ * character. The Charmander character uses fire as there attack.
+ * 
+ * @author Jesus Vargas
+ *
+ */
+public class Charmander extends Pokemon implements Fire {
+	
+	/**
+	 * Charmander constructor 
+	 */
+	public Charmander() {
+		super("Charmander", 2);
+	}
+
+	@Override
+	int getType() {
+		return 0;
+	}
+
+	@Override
+	int specialFight(int move) {
+		return 0;
+	}
+
+	@Override
+	void displaySpecialMenu() {
+	}
+
+	@Override
+	public int ember() {
+		return 0;
+	}
+
+	@Override
+	public int fireBlast() {
+		return 0;
+	}
+
+	@Override
+	public int firePunch() {
+		return 0;
+	}
+
+	
+	
+}

@@ -1,0 +1,42 @@
+
+import java.util.*;//needed for scanner and input exception 
+import java.awt.Point;
+import java.lang.*;//needed for array exception 
+public class InputTest { 
+ 		 	
+ 		
+	public static boolean checkInt(int x, int y) {	
+ 		Scanner in = new Scanner(System.in);
+ 	
+		
+ 		
+ 		
+ 		int [][] array = {{0, 1, 2, 3, 4},
+ 							{5,6,7,8,9},
+ 							{10,11,12,13},
+ 							{14,15,16,17},
+ 							{18,19,20,21}};  	 	
+ 		boolean testInput = true;  	 	
+ 		//while ( testInput ) { 
+ 	 	 	
+ 	 	 	try{  	 	 	 	
+ 	 	 		//int input = in.nextInt(); //exceptions?  	 	 	 	
+ 	 	 		System.out.println(array[x][y]);  	 	 	 	
+ 	 	 		
+ 	 	 	}catch ( InputMismatchException im ) { 
+ 	 	 		testInput = false; 
+ 	 	 		in.next(); //clear buffer  	 	 	 	
+ 	 	 		System.out.println("Invalid Input"); 
+ 	 	 	}catch (ArrayIndexOutOfBoundsException ob){
+ 	 	 		testInput = false; 
+ 	 	 	 	System.out.println("Invalid Index"); 
+ 	 	 	}finally { 
+ 	 	 		testInput = false; 
+ 	 	 	 	System.out.println(array[0]); 
+ 	 	 	} 
+ 	 	//}
+		return testInput;
+		
+	}
+}
+

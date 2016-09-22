@@ -1,0 +1,57 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * This program makes 3 oppenents and returns that opponent
+ * 
+ * @author Jesus Vargas
+ *
+ */
+public class OpponentMaker {
+	
+	private ArrayList<Opponent> opponentList;
+
+	/**
+	 * Make Random Opponent makes a random opponent and returns opponent
+	 * 
+	 * @return null
+	 */
+	public static Opponent MakeRandomOpponent() {
+		//just have five lines of data for each opponent’s name,
+		//hp, attack speech, lose speech, and win speech)
+		ArrayList<Opponent> opponentList = new ArrayList();
+		
+		//Reads in Files
+				try{
+					Scanner read = new Scanner(new File("OpponentList.txt"));
+					do{		
+						//String line = read.nextLine();
+						
+						String name = read.nextLine();
+						String hp = read.nextLine();
+						String attackSpeech = read.nextLine();
+						String [] tokens =  attackSpeech.split("\n");
+						String loseSpeech = read.nextLine();
+						String winSpeech = read.nextLine();
+						
+						opponentList.add(new Opponent(name, Integer.parseInt(hp),
+								attackSpeech, loseSpeech,winSpeech));
+					}while (read.hasNext());
+					read.close ();
+				}catch (FileNotFoundException fnf){
+					System.out.println ("File was not found");
+				}
+				
+
+		int size = opponentList.size();
+
+		int opponent = (int) (Math.random() * (size-1)) + 1;
+
+		
+		return opponentList.get(opponent);
+	
+	}
+
+}

@@ -1,0 +1,17 @@
+
+public class PokemonMain {
+	
+	public static void main(String[] args){
+		Pokemon t = new Pokemon("ASH Ketchum", 3);
+		
+		System.out.print("Hello" + " " + t.getName());
+		System.out.print("Choose your pokemon:");
+		System.out.print("1. Charmander");
+		System.out.print("1. Pikachu");
+	}
+	
+	
+	
+	
+	
+}
