@@ -9,8 +9,7 @@ public class Computer {
 		description = new HashMap<Pattern, Integer>();
 	}
 	
-	public int makePrediction(Pattern p){
-	
+	public int makePrediction(){
 		int prediction = 0;
 		
 		int randChoice = (int) (Math.random()*3) + 1;

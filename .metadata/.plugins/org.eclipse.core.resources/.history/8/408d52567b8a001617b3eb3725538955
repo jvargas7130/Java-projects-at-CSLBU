@@ -18,7 +18,6 @@ public class PokeTester {
 		System.out.println("1. Beginner");
 		System.out.println("2. Advance");
 		int choose = CheckInput.checkInt(1, 2);
-		int computer = c.makePrediction(new Pattern(pattern));
 		while (!done) {
 
 			if (choose == 1) {
@@ -31,7 +30,7 @@ public class PokeTester {
 				pattern = playGame(pattern, c);
 				if(pattern.length() == 8){
 					c.storePattern(new Pattern(pattern));
-					pattern = pattern.substring(1);
+					pattern = "";
 				}
 			}
 
@@ -57,14 +56,14 @@ public class PokeTester {
 			pattern += "g";
 		}
 
-		winner(player, c,pattern);
+		winner(player, c);
 		System.out.println(pattern);
 		
 		return pattern;
 	}
 
-	public static void winner(int player,Computer c, String pattern){
-	
+	public static void winner(int player,Computer c){
+		int computer = c.makePrediction();
 		if(computer == 1){
 			System.out.println("Computer chose fire");
 		}else if(computer == 2){
