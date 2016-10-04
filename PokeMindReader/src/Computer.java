@@ -8,9 +8,14 @@ public class Computer {
 		description = new HashMap<Pattern, Integer>();
 	}
 	
-	public void makePrediction(){
+	public int makePrediction(){
+		int prediction = 0;
 		
+		int randChoice = (int) (Math.random()*3) + 1;
+		System.out.println("rand" +randChoice);
+		prediction = randChoice;
 		
+		return prediction;
 	}
  
 	public void storePattern(Pattern p){
