@@ -10,12 +10,9 @@ public class Computer {
 	
 	public void makePrediction(){
 		
-		
 	}
- 
+	
 	public void storePattern(Pattern p){
-		
-		description.put(p, 1);
 		
 	}
 }

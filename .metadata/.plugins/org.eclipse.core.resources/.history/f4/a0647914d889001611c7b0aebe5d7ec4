@@ -1,6 +1,7 @@
-import java.io.Serializable;
 
-public class Pattern implements Serializable{
+
+
+public class Pattern {
 	private String pattern;
 	
 	public Pattern(){

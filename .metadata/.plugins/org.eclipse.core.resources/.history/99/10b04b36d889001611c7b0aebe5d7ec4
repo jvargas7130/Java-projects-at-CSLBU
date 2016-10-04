@@ -12,10 +12,10 @@ public class Computer {
 		
 		
 	}
- 
+	
 	public void storePattern(Pattern p){
 		
-		description.put(p, 1);
+		description.put
 		
 	}
 }
