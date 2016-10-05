@@ -23,11 +23,9 @@ public class PokeTester {
 
 			if (choose == 1) {
 			
-				if(pattern.length() == 5){
-					
-					pattern = pattern.substring(1);
+				if(pattern.length() == 4){
 					c.storePattern(new Pattern(pattern));
-					
+					pattern = pattern.substring(1);
 				}
 				computer = c.makePrediction(pattern);
 				pattern = playGame(pattern, c, computer);

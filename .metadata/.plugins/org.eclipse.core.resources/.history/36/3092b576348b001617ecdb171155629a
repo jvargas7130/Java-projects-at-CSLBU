@@ -10,7 +10,7 @@ public class PokeTester {
 		String pattern = "";
 
 		Computer c = new Computer();
-		int computer = 0;
+		
 		
 		
 		System.out.print("Welcome to Pokemon Mind Reader");
@@ -18,22 +18,16 @@ public class PokeTester {
 		System.out.println("1. Beginner");
 		System.out.println("2. Advance");
 		int choose = CheckInput.checkInt(1, 2);
-	
+		int computer = c.makePrediction(new Pattern(pattern));
 		while (!done) {
 
 			if (choose == 1) {
-			
-				if(pattern.length() == 5){
-					
-					pattern = pattern.substring(1);
-					c.storePattern(new Pattern(pattern));
-					
-				}
-				computer = c.makePrediction(pattern);
 				pattern = playGame(pattern, c, computer);
-				
+				if(pattern.length() == 4){
+					c.storePattern(new Pattern(pattern));
+					pattern = pattern.substring(1);
+				}
 			} else if (choose == 2) {
-				computer = c.makePrediction(pattern);
 				pattern = playGame(pattern, c, computer);
 				if(pattern.length() == 8){
 					c.storePattern(new Pattern(pattern));

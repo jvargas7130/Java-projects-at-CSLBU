@@ -10,7 +10,7 @@ public class PokeTester {
 		String pattern = "";
 
 		Computer c = new Computer();
-		int computer = 0;
+		
 		
 		
 		System.out.print("Welcome to Pokemon Mind Reader");
@@ -18,23 +18,17 @@ public class PokeTester {
 		System.out.println("1. Beginner");
 		System.out.println("2. Advance");
 		int choose = CheckInput.checkInt(1, 2);
-	
+		int computer = c.makePrediction(new Pattern(pattern));
 		while (!done) {
 
 			if (choose == 1) {
-			
-				if(pattern.length() == 5){
-					
-					pattern = pattern.substring(1);
+				pattern = playGame(pattern, c);
+				if(pattern.length() == 4){
 					c.storePattern(new Pattern(pattern));
-					
+					pattern = pattern.substring(1);
 				}
-				computer = c.makePrediction(pattern);
-				pattern = playGame(pattern, c, computer);
-				
 			} else if (choose == 2) {
-				computer = c.makePrediction(pattern);
-				pattern = playGame(pattern, c, computer);
+				pattern = playGame(pattern, c);
 				if(pattern.length() == 8){
 					c.storePattern(new Pattern(pattern));
 					pattern = pattern.substring(1);
@@ -45,7 +39,7 @@ public class PokeTester {
 
 	}
 
-	public static String playGame(String pattern, Computer c, int computer) {
+	public static String playGame(String pattern, Computer c) {
 		System.out.println("Choose Pokemon");
 		System.out.println("1. Fire");
 		System.out.println("2. Water");
@@ -63,13 +57,13 @@ public class PokeTester {
 			pattern += "g";
 		}
 
-		winner(player, c,pattern, computer);
+		winner(player, c,pattern);
 		System.out.println(pattern);
 		
 		return pattern;
 	}
 
-	public static void winner(int player,Computer c, String pattern,int computer){
+	public static void winner(int player,Computer c, String pattern){
 	
 		if(computer == 1){
 			System.out.println("Computer chose fire");

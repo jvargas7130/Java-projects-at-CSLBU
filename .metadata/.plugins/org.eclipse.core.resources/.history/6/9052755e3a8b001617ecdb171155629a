@@ -1,0 +1,61 @@
+import java.util.HashMap;
+
+public class Computer {
+	
+	private HashMap <Pattern, Integer> description ;
+	private Pattern p;
+	
+	public Computer(){
+		description = new HashMap<Pattern, Integer>();
+	}
+	
+	public int makePrediction(String newP){
+		int prediction = 0;
+		
+		
+	
+		
+
+		
+		
+		if(description.containsKey(p.getPattern())){
+			
+		if(newP.length() == 4){	
+			String p1 = newP.substring(0, 2) + "f";
+			String p2 =  newP.substring(0, 2) + "w";
+			String p3 = newP.substring (0,2) + "g";
+			
+			System.out.println(p1);
+			System.out.println(p2);
+			System.out.println(p3);
+		}else if(newP.length() == 8){
+			
+		}
+		
+			
+			
+			
+		}else{
+			int randChoice = (int) (Math.random()*3) + 1;
+			System.out.println("rand" +randChoice);
+			prediction = randChoice;
+		}
+		
+	
+		
+		return prediction;
+	}
+ 
+	public void storePattern(Pattern p){
+	
+		int i = 1;
+		
+		if (description.containsKey(p)){
+			description.put(p, i++);
+		
+		}else{
+			description.put(p, i);
+		}
+	
+	}
+}

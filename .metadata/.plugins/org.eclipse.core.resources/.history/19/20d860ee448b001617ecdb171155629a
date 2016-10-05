@@ -26,23 +26,8 @@ public class Computer {
 				String p3 = newP.substring (0,3) + "g";
 				
 				
-	
-					if(!description.containsKey(p1)){
-						System.out.println("p1");
-						description.put(p, 0);
-					}
-					
-					if(!description.containsKey(p2)){
-						System.out.println("p2");
-						description.put(p, 0);
-					}
-					
-					if(!description.containsKey(p3)){
-						System.out.println("p3");
-						description.put(p, 0);
-					}
 				
-			
+	
 				System.out.println(p1);
 				System.out.println(p2);
 				System.out.println(p3);
