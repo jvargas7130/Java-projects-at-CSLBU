@@ -25,57 +25,106 @@ public class Computer {
 				String p2 =  newP.substring(0, 3) + "w";
 				String p3 = newP.substring (0,3) + "g";
 				
-				
+				Pattern pat1 = new Pattern(p1);
+				Pattern pat2 = new Pattern(p2);
+				Pattern pat3 = new Pattern(p3);
 	
 					if(!description.containsKey(p1)){
-						System.out.println("p1");
-						description.put(p, 0);
+						description.put(pat1, 0);
 					}
 					
 					if(!description.containsKey(p2)){
-						System.out.println("p2");
-						description.put(p, 0);
+						description.put(pat2, 0);
 					}
 					
 					if(!description.containsKey(p3)){
 						System.out.println("p3");
-						description.put(p, 0);
+						description.put(pat3, 0);
 					}
 				
-			
+
+				
+				if((description.get(pat1)  > description.get(pat2)) &&(description.get(pat1)  > description.get(pat3)) ){
+					System.out.println("f");
+					prediction = 1;
+					
+				}else if((description.get(pat2)  > description.get(pat1)) &&(description.get(pat2)  > description.get(pat3))){
+					System.out.println("w");
+					prediction = 2;
+				}else if((description.get(pat3)  > description.get(pat1)) &&(description.get(pat3)  > description.get(pat2))){
+					System.out.println("g");
+					prediction = 3;
+				}else{
+					int randChoice = (int) (Math.random()*3) + 1;
+					System.out.println("rand" +randChoice);
+					prediction = randChoice;
+				}
+
+			}else if(newP.length() == 8){
+				
+				
+				String p1 = newP.substring(0, 7) + "f";
+				String p2 =  newP.substring(0, 7) + "w";
+				String p3 = newP.substring (0,7) + "g";
+				
 				System.out.println(p1);
 				System.out.println(p2);
 				System.out.println(p3);
 				
-				if((description.get(p1)  > description.get(p2)) &&(description.get(p1)  > description.get(p3)) ){
+				Pattern pat1 = new Pattern(p1);
+				Pattern pat2 = new Pattern(p2);
+				Pattern pat3 = new Pattern(p3);
+	
+					if(!description.containsKey(p1)){
+						description.put(pat1, 0);
+					}
+					
+					if(!description.containsKey(p2)){
+						description.put(pat2, 0);
+					}
+					
+					if(!description.containsKey(p3)){
+						System.out.println("p3");
+						description.put(pat3, 0);
+					}
+				
+
+				
+				if((description.get(pat1)  > description.get(pat2)) &&(description.get(pat1)  > description.get(pat3)) ){
 					System.out.println("f");
 					prediction = 1;
 					
-				}else if((description.get(p2)  > description.get(p1)) &&(description.get(p2)  > description.get(p3))){
+				}else if((description.get(pat2)  > description.get(pat1)) &&(description.get(pat2)  > description.get(pat3))){
 					System.out.println("w");
 					prediction = 2;
-				}else if((description.get(p3)  > description.get(p1)) &&(description.get(p3)  > description.get(p2))){
+				}else if((description.get(pat3)  > description.get(pat1)) &&(description.get(pat3)  > description.get(pat2))){
 					System.out.println("g");
 					prediction = 3;
+				}else{
+					int randChoice = (int) (Math.random()*3) + 1;
+					System.out.println("rand" +randChoice);
+					prediction = randChoice;
 				}
 				
 				
-		     
 				
 				
-			}else if(newP.length() == 8){
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				
 			}else{
 				int randChoice = (int) (Math.random()*3) + 1;
 				System.out.println("rand" +randChoice);
 				prediction = randChoice;
 			}
-			
-				
-				
-				
-			
-			
+
 		}else{
 			int randChoice = (int) (Math.random()*3) + 1;
 			System.out.println("rand" +randChoice);
