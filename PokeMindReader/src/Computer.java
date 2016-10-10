@@ -11,75 +11,66 @@ public class Computer implements Serializable {
 	public Computer() {
 		description = new HashMap<Pattern, Integer>();
 	}
-	public String getPattern(){
+
+	public String getPattern() {
 		return s.getPattern();
 	}
 
 	public int makePrediction(String newP) {
+
 		int prediction = 0;
 
-		 s = storePattern(new Pattern(newP));
-		
+		s = storePattern(new Pattern(newP));
+
 		System.out.println(s.getPattern());
 
 		if (!description.isEmpty()) {
 
-			String p1 = "";
-			String p2 = "";
-			String p3 = "";
+			String p1 = newP.substring(0, 3) + "f";
+			String p2 = newP.substring(0, 3) + "w";
+			String p3 = newP.substring(0, 3) + "g";
 
-			if (newP.length() == 4) {
-
-				p1 = newP.substring(0, 3) + "f";
-				p2 = newP.substring(0, 3) + "w";
-				p3 = newP.substring(0, 3) + "g";
-
-			} else if (newP.length() == 8) {
-
-				p1 = newP.substring(0, 7) + "f";
-				p2 = newP.substring(0, 7) + "w";
-				p3 = newP.substring(0, 7) + "g";
-
-			}
 			Pattern pat1 = new Pattern(p1);
 			Pattern pat2 = new Pattern(p2);
 			Pattern pat3 = new Pattern(p3);
 
-			if (description.containsKey(pat1) == false) {//Does not contain pattern 1
+			if (description.containsKey(pat1) == false) {// Does not contain
+															// pattern 1
 				description.put(pat1, 0);
 			}
 
-			if (description.containsKey(pat2) == false) {//does not contain pattern 2
+			if (description.containsKey(pat2) == false) {// does not contain
+															// pattern 2
 				description.put(pat2, 0);
 			}
 
-			if (description.containsKey(pat3) == false) {//does not contain pattern 3
+			if (description.containsKey(pat3) == false) {// does not contain
+															// pattern 3
 				description.put(pat3, 0);
 			}
 
 			// 1.fire beats 3.grass
 			// 3.grass beats 2.water
 			// 2.water beats 1.fire
-				
-			//pat1 = f
-			//pat2 = w
-			//pat3 = g
-			
-			
-			//fire
+
+			// pat1 = f
+			// pat2 = w
+			// pat3 = g
+			System.out.println(description.get(pat1));
+			System.out.println(description.get(pat2));
+			System.out.println(description.get(pat3));
+
+			// fire
 			if ((description.get(pat1) > description.get(pat2)) && (description.get(pat1) > description.get(pat3))) {
-				prediction = 3;// grass
-				
-				
-				//water
-			} else if ((description.get(pat2) > description.get(pat1))
-					&& (description.get(pat2) > description.get(pat3))) {
-				prediction = 1;// fire
-				
-				//grass
-			} else if ((description.get(pat3) > description.get(pat1))
-					&& (description.get(pat3) > description.get(pat2))) {
-				prediction = 2;// water
+				prediction = 2;// water beats fire
+
+				// water
+			} else if ((description.get(pat2) > description.get(pat1)) && (description.get(pat2) > description.get(pat3))) {
+				prediction = 3;// grass beats water
+
+				// grass
+			} else if ((description.get(pat3) > description.get(pat1)) && (description.get(pat3) > description.get(pat2))) {
+				prediction = 1;// vfire beats grass
 			} else {
 				int randChoice = (int) (Math.random() * 3) + 1;
 				prediction = randChoice;
@@ -92,20 +83,15 @@ public class Computer implements Serializable {
 
 	public Pattern storePattern(Pattern s) {
 
-	
-
 		if (description.containsKey(s) == true) {
-
 
 			int i = description.get(s) + 1;
 			System.out.println(description.get(s));
-			description.put(s, i++);
+			description.put(s, i);
 
 		} else {
-			description.put(s, i);
+			description.put(s, 1);
 		}
-
-	
 
 		return s;
 	}

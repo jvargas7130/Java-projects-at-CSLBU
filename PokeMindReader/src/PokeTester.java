@@ -12,143 +12,61 @@ public class PokeTester {
 		menu();
 	}
 
-	public static Computer readFile(int game){
+	public static Computer readFile(int game) {
 		boolean file = false;
 		Computer c = null;
-		int choose = 0;
-		int savedGame = 0;
 
+		File f = new File("Pokemon.Dat");
 
-		File B = new File("Beginner.Dat");
-		File V = new File("Veteran.Dat");
-		File F = null;
-		
-		if (game == 1) {
-			if (B.exists()) {
-				System.out.println("Would you like to continue beginner game?");
-				System.out.println("1.Yes");
-				System.out.println("2.No");
-				 savedGame= CheckInput.checkInt(1, 2);
-				 if(savedGame == 1){
-					 file = true;
-					 	F = B;
-				 }else if(savedGame == 2){
-					 
-				 }
-				
-			
-			} else {
-				System.out.println("New Game");
+		if (f.exists() && game == 2) {
+			try {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
+				c = (Computer) in.readObject();
+				in.close();
+			} catch (IOException e) {
+				System.out.println("Error processing file.");
+			} catch (ClassNotFoundException e) {
+				System.out.println("Could not find class.");
 			}
-		} else if (game == 2) {
-			
-				if (V.exists()) {
-					System.out.println("Would you like to continue Veteran game?");
-					System.out.println("1.Yes");
-					System.out.println("2.No");
-					 savedGame= CheckInput.checkInt(1, 2);
-					 if(savedGame == 1){
-						 file = true;
-						 	F = V;
-					 }else if(savedGame == 2){
-						 
-					 }
-				
-				} else {
-					System.out.println("New Game");
-				}
-			
-		}
+			System.out.println("Welcome to Veteran Pokemon Mind reader");
 
-		if (file) {
-
-	
-				try {
-					ObjectInputStream in = new ObjectInputStream(new FileInputStream(F));
-					c = (Computer) in.readObject();
-					in.close();
-				} catch (IOException e) {
-					System.out.println("Error processing file.");
-				} catch (ClassNotFoundException e) {
-					System.out.println("Could not find class.");
-				}
-
-	
-		} else {// new game
-			
-			 c = new Computer();
-			
+		} else {
+			c = new Computer();
+			System.out.println("Welcome to Beginner");
 		}
 
 		return c;
 
 	}
-	
-	
-
 
 	public static void menu() {
 		boolean done = false;
-	
+
 		int pWins = 0;
 		int cWins = 0;
-
 
 		int computer = 0;
 		String write = "";
 		// reads in saved file
-		System.out.print("Welcome to Pokemon Mind Reader");
+		System.out.println("Welcome to Pokemon Mind Reader");
 		System.out.println("Choose Difficulty");
 		System.out.println("1. Beginner");
 		System.out.println("2. Veteran");
 
 		int choose = CheckInput.checkInt(1, 2);
 		Computer c = readFile(choose);
-		
-		
+
 		String pattern = "";
-		
+
 		try {
 			pattern = c.getPattern();
 
 		} catch (NullPointerException e) {
-			pattern = "" ;
-		
+			pattern = "";
+
 		}
 
-	
-
 		while (!done) {// beginner
-
-			if (choose == 1) {
-				System.out.println("beginner");
-				
-				write = "Beginner.Dat";
-				if (pattern.length() == 5) {
-
-					pattern = pattern.substring(1);
-					computer = c.makePrediction(pattern);
-				} else {
-					int randChoice = (int) (Math.random() * 3) + 1;
-					computer = randChoice;
-				}
-
-			} else if (choose == 2) {// veteran
-				write = "Veteran.Dat";
-				if (pattern.length() == 9) {
-
-					pattern = pattern.substring(1);
-					c.storePattern(new Pattern(pattern));
-
-				} else {
-					int randChoice = (int) (Math.random() * 3) + 1;
-					computer = randChoice;
-				}
-
-			}
-
-			// repeating menu
-			computer = c.makePrediction(pattern);
 			System.out.println("Choose Pokemon");
 			System.out.println("1. Fire");
 			System.out.println("2. Water");
@@ -157,8 +75,21 @@ public class PokeTester {
 
 			// player chooses
 			int player = CheckInput.checkInt(1, 4);
+			if (pattern.length() == 4) {
+
+			
+				System.out.println(pattern);
+				computer = c.makePrediction(pattern);
+				pattern = pattern.substring(1);
+			} else {
+				int randChoice = (int) (Math.random() * 3) + 1;
+				System.out.println("rand" + randChoice);
+				computer = randChoice;
+			}
+
+		
 			if (player == 4) {
-				writeGame(c, write);
+				writeGame(c);
 				System.out.println("Saving..........");
 				done = true;
 			} else {
@@ -176,7 +107,7 @@ public class PokeTester {
 				}
 				showPercentage(cWins, pWins);// shows percentage
 
-				writeGame(c, write);// save game every round
+				writeGame(c);// save game every round
 			}
 
 		}
@@ -232,7 +163,6 @@ public class PokeTester {
 
 	public static void showPercentage(int computer, int player) {
 		int total = computer + player;
-		System.out.println("total " + total);
 		double percentage = 0.0;
 
 		System.out.println("Player   score:" + player);
@@ -251,9 +181,9 @@ public class PokeTester {
 
 	}
 
-	public static void writeGame(Computer c, String f) {
+	public static void writeGame(Computer c) {
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Pokemon.Dat"));
 			out.writeObject(c);
 			out.close();
 		} catch (IOException e) {
