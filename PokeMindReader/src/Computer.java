@@ -60,16 +60,26 @@ public class Computer implements Serializable {
 			// 1.fire beats 3.grass
 			// 3.grass beats 2.water
 			// 2.water beats 1.fire
-
+				
+			//pat1 = f
+			//pat2 = w
+			//pat3 = g
+			
+			
+			//fire
 			if ((description.get(pat1) > description.get(pat2)) && (description.get(pat1) > description.get(pat3))) {
-				prediction = 2;// water
-
+				prediction = 3;// grass
+				
+				
+				//water
 			} else if ((description.get(pat2) > description.get(pat1))
 					&& (description.get(pat2) > description.get(pat3))) {
-				prediction = 3;// grass
+				prediction = 1;// fire
+				
+				//grass
 			} else if ((description.get(pat3) > description.get(pat1))
 					&& (description.get(pat3) > description.get(pat2))) {
-				prediction = 1;// fire
+				prediction = 2;// water
 			} else {
 				int randChoice = (int) (Math.random() * 3) + 1;
 				prediction = randChoice;
