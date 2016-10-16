@@ -1,4 +1,5 @@
 INDEX VERSION 1.129+C:\Users\jvarg\Documents\workspace277\.metadata\.plugins\org.eclipse.jdt.core
+<<<<<<< HEAD
 781808.index
 471236001.index
 3407430047.index
@@ -22,3 +23,10 @@ INDEX VERSION 1.129+C:\Users\jvarg\Documents\workspace277\.metadata\.plugins\org
 2232339727.index
 2133282975.index
 825832578.index
+=======
+2232339727.index
+205955440.index
+465127329.index
+825832578.index
+78965035.index
+>>>>>>> origin/master
