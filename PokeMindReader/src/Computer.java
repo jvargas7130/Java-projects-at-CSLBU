@@ -2,33 +2,57 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.io.Serializable;
 
+/**
+ * Computer program Stores hash map, stores a pattern in hashmap, and predicts
+ * players nest move
+ * 
+ * @author jesus Vargas
+ *
+ */
 public class Computer implements Serializable {
 
+	/**
+	 * Hashmap instant variables
+	 */
 	private HashMap<Pattern, Integer> description;
-	private Pattern s;
-	private int i = 1;
 
+	/**
+	 * Pattern object is stored
+	 */
+	private Pattern s;
+
+	/**
+	 * computer constructor
+	 */
 	public Computer() {
 		description = new HashMap<Pattern, Integer>();
 	}
 
+	/**
+	 * getPattern method accessor
+	 * 
+	 * @return String pattern
+	 */
 	public String getPattern() {
 		return s.getPattern();
 	}
 
+	/**
+	 * Make prediction predicts the pattern of player
+	 * 
+	 * @param newP String pattern is passed in to be used in prediction
+	 *          
+	 * @return prediction of player
+	 */
 	public int makePrediction(String newP) {
 
 		int prediction = 0;
 
-		s = storePattern(new Pattern(newP));
-
-		System.out.println(s.getPattern());
-
 		if (!description.isEmpty()) {
 
-			String p1 = newP.substring(0, 3) + "f";
-			String p2 = newP.substring(0, 3) + "w";
-			String p3 = newP.substring(0, 3) + "g";
+			String p1 = newP.substring(1) + "f";
+			String p2 = newP.substring(1) + "w";
+			String p3 = newP.substring(1) + "g";
 
 			Pattern pat1 = new Pattern(p1);
 			Pattern pat2 = new Pattern(p2);
@@ -65,23 +89,35 @@ public class Computer implements Serializable {
 				prediction = 2;// water beats fire
 
 				// water
-			} else if ((description.get(pat2) > description.get(pat1)) && (description.get(pat2) > description.get(pat3))) {
+			} else if ((description.get(pat2) > description.get(pat1))
+					&& (description.get(pat2) > description.get(pat3))) {
 				prediction = 3;// grass beats water
 
 				// grass
-			} else if ((description.get(pat3) > description.get(pat1)) && (description.get(pat3) > description.get(pat2))) {
+			} else if ((description.get(pat3) > description.get(pat1))
+					&& (description.get(pat3) > description.get(pat2))) {
 				prediction = 1;// vfire beats grass
 			} else {
 				int randChoice = (int) (Math.random() * 3) + 1;
 				prediction = randChoice;
 			}
 
+		} else {
+			int randChoice = (int) (Math.random() * 3) + 1;
+			System.out.println("rand" + randChoice);
+			prediction = randChoice;
 		}
 
 		return prediction;
 	}
 
-	public Pattern storePattern(Pattern s) {
+	/**
+	 * Store prediction stores the pattern of player in hashmap
+	 * 
+	 * @param s Patttern object is passed in
+	 *           
+	 */
+	public void storePattern(Pattern s) {
 
 		if (description.containsKey(s) == true) {
 
@@ -93,6 +129,5 @@ public class Computer implements Serializable {
 			description.put(s, 1);
 		}
 
-		return s;
 	}
 }

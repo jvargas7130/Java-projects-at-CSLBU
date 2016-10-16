@@ -7,7 +7,7 @@
 	<section name="javadoc">
 		<item value="public" key="access"/>
 		<item value="false" key="noindex"/>
-		<item value="C:\Users\jvarg\Documents\277Projects\Pokemon277\javadoc.xml" key="antpath"/>
+		<item value="C:\Users\jvarg\Documents\workspace277\PokeMindReader\javadoc.xml" key="antpath"/>
 		<item value="false" key="nodeprecatedlist"/>
 		<item value="true" key="use"/>
 		<item value="true" key="author"/>
@@ -21,9 +21,14 @@
 		<item value="true" key="splitindex"/>
 		<item value="true" key="fromStandard"/>
 		<item value="false" key="notree"/>
-		<item value="C:\Users\jvarg\Documents\277Projects\Pokemon277\doc" key="destdir"/>
+		<item value="C:\Users\jvarg\Documents\workspace277\PokeMindReader\doc" key="destdir"/>
 		<item value="false" key="openinbrowser"/>
 		<section name="projects">
+			<section name="PokeMindReader">
+				<item value="C:\Users\jvarg\Documents\workspace277\PokeMindReader\javadoc.xml" key="antpath"/>
+				<item value="C:\Users\jvarg\Documents\workspace277\PokeMindReader\doc" key="destdir"/>
+				<item value="" key="href"/>
+			</section>
 			<section name="PolymorphismEx">
 				<item value="C:\Users\jvarg\Documents\277Projects\PolymorphismEx\javadoc.xml" key="antpath"/>
 				<item value="C:\Users\jvarg\Documents\277Projects\PolymorphismEx\doc" key="destdir"/>
@@ -37,11 +42,6 @@
 			<section name="MovieDatabase">
 				<item value="C:\Users\jvarg\Documents\277Projects\MovieDatabase\javadoc.xml" key="antpath"/>
 				<item value="C:\Users\jvarg\Documents\277Projects\MovieDatabase\doc" key="destdir"/>
-				<item value="" key="href"/>
-			</section>
-			<section name="Pokemon">
-				<item value="C:\Users\jvarg\Documents\277Projects\Pokemon\javadoc.xml" key="antpath"/>
-				<item value="C:\Users\jvarg\Documents\277Projects\Pokemon\doc" key="destdir"/>
 				<item value="" key="href"/>
 			</section>
 			<section name="Pokemon277">

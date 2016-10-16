@@ -11,7 +11,7 @@ public class CheckInput {
 	/**
 	 * checkInt method value checks the value of an integer 
 	 * 
-	 * @return validnum 
+	 * @return validnum  returns valid number
 	 */
 	public static int checkInt(){
 		Scanner in = new Scanner(System.in);

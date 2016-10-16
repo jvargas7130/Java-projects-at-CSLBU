@@ -1,34 +1,60 @@
 import java.io.Serializable;
 
-public class Pattern implements Serializable{
+/**
+ * Pattern class stores a pattern that is stored in a hashmap
+ * 
+ * @author jesus vargas
+ *
+ */
+public class Pattern implements Serializable {
+
+	/**
+	 * String pattern object
+	 */
 	private String pattern;
-	
-	public Pattern(String p){
+
+	/**
+	 * Pattern constructor
+	 * 
+	 * @param p
+	 *            String pattern is passed in
+	 */
+	public Pattern(String p) {
 		pattern = p;
 	}
-	
-	public String getPattern(){
+
+	/**
+	 * String pattern method accessor
+	 * 
+	 * @return
+	 */
+	public String getPattern() {
 		return pattern;
 	}
-	
+
+	/**
+	 * Hash code hahses pattern
+	 * 
+	 * @return hashed pattern
+	 */
 	@Override
-	public int hashCode(){
+	public int hashCode() {
 		return pattern.hashCode();
 	}
-	
+
+	/**
+	 * equals method checks it the patterns are in order
+	 * 
+	 * @return true or false depending on the pattern
+	 */
 	@Override
-	public boolean equals ( Object o){
-		if(o instanceof Pattern){
+	public boolean equals(Object o) {
+		if (o instanceof Pattern) {
 			Pattern p = (Pattern) o;
 			return pattern.equals(p.pattern);
 		}
-		
+
 		return false;
 	}
-	
+
 }
-
-
-
-	
-
