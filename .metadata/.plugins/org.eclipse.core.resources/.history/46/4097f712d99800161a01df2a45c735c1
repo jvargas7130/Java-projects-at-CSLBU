@@ -1,0 +1,83 @@
+import java.util.ArrayList;
+
+import javax.xml.soap.Node;
+
+public class Heap {
+	
+	
+	private ArrayList<Node> heap;
+	public Heap(){
+		heap = new Arraylist<Node>;
+	}
+	
+	public int getSize(){
+		return heap.size();
+	}
+	
+	public boolean isEmpty(){
+		return heap.isEmpty();
+	}
+	
+	public int getPloc(int i){
+		return (i-1)/2;
+	}
+	
+	public int getLClock(int i){
+		return 2*i +1;
+	}
+	
+	public int getRClock(int i){
+		return 2 * i + 2;
+	}
+	
+	public Node getNodeAt(){
+		if(heap.get(i) == null){
+			System.out.println("Item does not exist");
+			return null; 
+		}else{
+			return heap.get(i);
+		}
+	}
+	
+	public void addNode(Node n){
+		heap.add(null);
+		int index = heap.size() - 1;
+		while()index > 0 && getNodeAt(getPloc(index)).getData() > n.gettData()){
+			heap.set(index, getNodeAt(getPloc(index));
+		}
+		heap.set(index, n);
+	}
+	
+	public Node removeMin(){
+		Node min = heap.get(0);
+		int index = heap.size()-1;
+		index = 0;
+		boolean done = false;
+		while(!done){
+			if(getLCLoc(index) <= end){//left exist
+				Node Child = get NodeAt(getLCLoc(index));
+				int childLoc = getCloc(index);
+				if(getRClock(index)<=end){//rt exist
+					if(getNodeAt(getRLoc(index)).getData()<child.getData()){
+						child = getNodeAt(getRCLoc(index));
+						
+						childLoc = getRCLoc(index);
+					}
+					
+				}
+				if(child.getData()<root.getData())){
+					heap.set(index, child);
+					index = childloc;
+				}else{
+					done = true;
+				}
+				
+			}else{//no children
+				done = true;
+			}
+		}
+	}
+	
+	
+
+}
