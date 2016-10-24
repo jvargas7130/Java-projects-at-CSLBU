@@ -2,12 +2,12 @@ import java.util.ArrayList;
 
 
 
-public class Heap {
+public class Heap<T> {
 	
 	
-	private ArrayList<Node> heap;
+	private ArrayList<T> heap;
 	public Heap(){
-		heap = new ArrayList<Node>();
+		heap = new ArrayList<T>();
 	}
 	
 	public int getSize(){
@@ -30,7 +30,7 @@ public class Heap {
 		return 2 * i + 2;
 	}
 	
-	public Node getNodeAt(int i){
+	public T getNodeAt(int i){
 		
 		
 
@@ -42,30 +42,30 @@ public class Heap {
 		}
 	}
 	
-	public void addNode(Node n){
+	public void addNode(T n){
 		heap.add(null);
 		int index = heap.size() - 1;
-		while(index > 0 &&  getNodeAt(getPLoc(index)).getData() > n.getData()){
+		while(index > 0 &&  getNodeAt(getPLoc(index)).getData( > n.getData()){
 			heap.set(index, getNodeAt(getPLoc(index)));
 		}
 		heap.set(index, n);
 	}
 	
-	public Node removeMin(){
-		Node min = heap.get(0);
+	public T removeMin(){
+		T min = heap.get(0);
 		int index = heap.size()-1;
-		Node last = heap.remove(index);
+		T last = heap.remove(index);
 		if(index > 0){
 			heap.set(index, last);
-			Node root = heap.get(0);
+			T root = heap.get(0);
 			int end = heap.size() - 1;
 		boolean done = false;
 		while(!done){
 			if(getLCLoc(index) <= end){//left exist
-				Node child = getNodeAt(getLCLoc(index));
+				T child = getNodeAt(getLCLoc(index));
 				int childLoc = getLCLoc(index);
 				if(getRCLoc(index)<=end){//rt exist
-					if(getNodeAt(getRCLoc(index)).getData()<child.getData()){
+					if(getNodeAt(getRCLoc(index)).getData() < child.getData()){
 						child = getNodeAt(getRCLoc(index));
 						
 						childLoc = getRCLoc(index);

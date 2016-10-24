@@ -55,7 +55,7 @@ public class Song implements Comparable<Song> {
 	
 	//tostring
 	public String toString(){
-		return "t"+" " + "a" +" "+ "aB" + "" + "r";
+		return "title"+"," + "artist" +","+ "album" + "," + "rating";
 	}
 	
 	/**
