@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -16,7 +17,8 @@ import java.util.Scanner;
 public class Jukeboxtest1 {
 
 	public static void main(String[] args) {
-
+		Heap<Song> h = new Heap<Song>();
+		 menu(h);
 	}
 
 	/**
@@ -27,31 +29,32 @@ public class Jukeboxtest1 {
 	 * @param songs
 	 *            arraulist to be stored
 	 */
-	public static void readInFile(String fileName, ArrayList<Song> songs) {
+	public static void readInFile(String fileName, Heap<Song> h) {
 
 		// Reads in Files
 		try {
 			Scanner read = new Scanner(new File(fileName));
 			do {
+			
 				String line = read.nextLine();
 				String[] tokens = line.split(",");
-				songs.add(new Song(tokens[0], tokens[1], tokens[2], tokens[3]));
+				h.addNode(new Song(tokens[0], tokens[1], tokens[2], tokens[3]));
 			} while (read.hasNext());
 			read.close();
 		} catch (FileNotFoundException fnf) {
 			System.out.println("File was not found");
 		}
-
+	
 	}
 
-	public static void menu() {
-		ArrayList<Song> songs = new ArrayList<Song>();
-
+	public static void menu(Heap<Song> h) {
+		
 		// read in file for songs
-		readInFile("Song.txt", songs);
+	
+		readInFile("songs.txt", h);
 
 		// write file for songs
-		writeSongsToFile("Song.txt", songs);
+		//writeSongsToFile("songs.txt", h);
 
 		boolean done = false;
 		while (!done) {
@@ -66,20 +69,20 @@ public class Jukeboxtest1 {
 
 			switch (choose) {
 			// Display the list of songs
-			case 1:
+			case 1: listSongs(h);
 				break;
 			// Display current song.
-			case 2:
+			case 2: displayCSong();
 				break;
 			// Add a new song to the list
-			case 3:
+			case 3: addSong();
 				break;
 			// Play next song-removes song from list, displays new current song.
-			case 4:
+			case 4: playNextSong();
 				break;
 			// Re-rate next song- prompts user for new rating , remove and
 			// re-add to list
-			case 5:
+			case 5: reRatesong();
 				break;
 			// quit
 			case 6:
@@ -100,8 +103,15 @@ public class Jukeboxtest1 {
 	/**
 	 * Listsongs displays the list of songs
 	 */
-	public static void listSongs(){
-		
+	public static void listSongs(Heap<Song> h ){
+	
+	
+		  h.PrintHeap();
+		  
+	
+	  
+	 
+	
 	}
 	
 	/**
@@ -141,12 +151,12 @@ public class Jukeboxtest1 {
 	 * @param fileName
 	 * @param songs
 	 */
-	public static void writeSongsToFile(String fileName, ArrayList<Song> songs) {
+	public static void writeSongsToFile(String fileName, Heap<Song> h) {
 		try {
 			PrintWriter writer = new PrintWriter(fileName);
-			for (Song p : songs) {
+			while(!h.isEmpty()){
 
-				writer.println(p.toString());
+				writer.println(h.toString());
 			}
 			writer.close();
 		} catch (FileNotFoundException fnf) {

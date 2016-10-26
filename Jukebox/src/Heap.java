@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 
 
-public class Heap<T> {
+public class Heap<T extends Comparable<T>>  {
 	
 	
 	private ArrayList<T> heap;
@@ -45,8 +45,10 @@ public class Heap<T> {
 	public void addNode(T n){
 		heap.add(null);
 		int index = heap.size() - 1;
-		while(index > 0 &&  getNodeAt(getPLoc(index)).getData( > n.getData()){
+	
+		while(index > 0 && getNodeAt(getPLoc(index)).compareTo(n) > 0 ){
 			heap.set(index, getNodeAt(getPLoc(index)));
+			index = getPLoc(index);
 		}
 		heap.set(index, n);
 	}
@@ -65,14 +67,16 @@ public class Heap<T> {
 				T child = getNodeAt(getLCLoc(index));
 				int childLoc = getLCLoc(index);
 				if(getRCLoc(index)<=end){//rt exist
-					if(getNodeAt(getRCLoc(index)).getData() < child.getData()){
+					
+					//getNodeAt(getRCLoc(index)).getData() < child.getData()
+					if(getNodeAt(getRCLoc(index)).compareTo(child) < 0){
 						child = getNodeAt(getRCLoc(index));
 						
 						childLoc = getRCLoc(index);
 					}
 					
 				}
-				if(child.getData()<root.getData()){
+				if(child.compareTo(root) < 0){
 					heap.set(index, child);
 					index = childLoc;
 				}else{
@@ -91,11 +95,9 @@ public class Heap<T> {
 	
 	public void PrintHeap(){
 		for(int i=0; i<heap.size(); i++){
-			System.out.print(heap.get(i).getData()+ " ");
+			System.out.println(heap.get(i)+ " ");
 		}
-		System.out.println();
-		
+			System.out.println();	
 	}
 	
-
 }
