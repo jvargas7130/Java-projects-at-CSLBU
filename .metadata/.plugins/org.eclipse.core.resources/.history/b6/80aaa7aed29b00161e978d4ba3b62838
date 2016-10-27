@@ -39,8 +39,6 @@ public class Jukeboxtest1 {
 				String line = read.nextLine();
 				String[] tokens = line.split(",");
 				h.addNode(new Song(tokens[0], tokens[1], tokens[2], tokens[3]));
-				 h.PrintHeap();
-				
 			} while (read.hasNext());
 			read.close();
 		} catch (FileNotFoundException fnf) {

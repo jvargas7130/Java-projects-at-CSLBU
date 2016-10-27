@@ -74,11 +74,11 @@ public class Song implements Comparable<Song> {
 	 */
 	@Override
 	public int compareTo(Song s) {
-		int result = 0;
+		
 		int rate1 = Integer.parseInt(rating);
 		int rate2 = Integer.parseInt(s.getRating());
 		
-	
+		int result = 0;
 		
 		if(rate1 > rate2){
 			result = -1;
