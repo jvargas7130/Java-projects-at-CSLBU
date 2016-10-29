@@ -39,7 +39,7 @@ public class Jukeboxtest1 {
 				String line = read.nextLine();
 				String[] tokens = line.split(",");
 				h.addNode(new Song(tokens[0], tokens[1], tokens[2], tokens[3]));
-				 h.PrintHeap();
+
 				
 			} while (read.hasNext());
 			read.close();
@@ -63,10 +63,10 @@ public class Jukeboxtest1 {
 
 			System.out.println("1. Display the list of songs");
 			System.out.println("2. Display current song.");
-			System.out.println("2. Add a new song to the list");
-			System.out.println("3. Play next song");
-			System.out.println("4. Re-rate next song");
-			System.out.println("5. Quit");
+			System.out.println("3. Add a new song to the list");
+			System.out.println("4. Play next song");
+			System.out.println("5. Re-rate next song");
+			System.out.println("6. Quit");
 			int choose = CheckInput.checkInt(1, 6);
 
 			switch (choose) {
@@ -74,17 +74,17 @@ public class Jukeboxtest1 {
 			case 1: listSongs(h);
 				break;
 			// Display current song.
-			case 2: displayCSong();
+			case 2: displayCSong(h);
 				break;
 			// Add a new song to the list
-			case 3: addSong();
+			case 3: addSong(h);
 				break;
 			// Play next song-removes song from list, displays new current song.
-			case 4: playNextSong();
+			case 4: playNextSong(h);
 				break;
 			// Re-rate next song- prompts user for new rating , remove and
 			// re-add to list
-			case 5: reRatesong();
+			case 5: reRatesong(h);
 				break;
 			// quit
 			case 6:
@@ -106,23 +106,17 @@ public class Jukeboxtest1 {
 	 * Listsongs displays the list of songs
 	 */
 	public static void listSongs(Heap<Song> h ){
-	
-		
 		
 	 h.PrintHeap();
 
-		  
-	
-	  
-	 
-	
 	}
 	
 	/**
 	 * DisplayCSong displays the current song 
 	 * 
 	 */
-	public static void displayCSong(){
+	public static void displayCSong(Heap<Song> h){
+		System.out.println(h.getNodeAt(0).getTitle() + " " +h.getNodeAt(0).getArtist() + " " +h.getNodeAt(0).getAlbum() +" " + h.getNodeAt(0).getRating());
 		
 	}
 	
@@ -130,7 +124,19 @@ public class Jukeboxtest1 {
 	 * Addsong method adds a song to the list
 	 * 
 	 */
-	public static void addSong(){
+	public static void addSong(Heap<Song> h){
+		Scanner in = new Scanner(System.in);
+		
+		System.out.println("Enter Title");
+		String title = in.nextLine();
+		System.out.println("Enter Artist");
+		String artist = in.nextLine();
+		System.out.println("Enter Album");
+		String album = in.nextLine();
+		System.out.println("Enter Rating");
+		String rating = in.nextLine();
+
+		h.addNode(new Song(title,artist,album,rating));
 		
 	}
 	
@@ -138,14 +144,27 @@ public class Jukeboxtest1 {
 	 * Playnextsong plays -removes song from list, displays new current song.
 	 * 
 	 */
-	public static void playNextSong(){
-	
+	public static void playNextSong(Heap<Song> h){
+		h.removeMin();
 	}
 	
 	/**
 	 * Re-rate next song- prompts user for new rating , remove and re-add to list
 	 */
-	public static void reRatesong(){
+	public static void reRatesong(Heap<Song> h){
+
+		Scanner in = new Scanner(System.in);
+		String title =  h.getNodeAt(0).getTitle() ;
+		String artist =  h.getNodeAt(0).getArtist();
+		String album = h.getNodeAt(0).getAlbum();
+		
+		System.out.println("Enter rate");
+		int rate = CheckInput.checkInt(1, 5);
+		String strRate = "" + rate;
+		
+		h.removeMin();
+		h.addNode(new Song(title,artist,album,strRate));
+		
 		
 	}
 	

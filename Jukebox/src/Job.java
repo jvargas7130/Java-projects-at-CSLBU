@@ -1,5 +1,6 @@
-
-public class Job implements Comparable {
+import java.util.Calendar;
+public class Job implements Comparable<Job> {
+	
 	
 	private String taskName;
 	
@@ -34,8 +35,11 @@ public class Job implements Comparable {
 	 * @return returns negative integer if the two objects are in order, 
 	 * a zero if they are equal and  a positive integer if they are out of order
 	 */
+
+
 	@Override
-	public int compareTo(Object o) {
+	public int compareTo(Job j) {
+		
 		return 0;
 	}
 	

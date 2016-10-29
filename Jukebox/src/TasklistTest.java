@@ -18,31 +18,43 @@ public class TasklistTest {
 
 	}
 
-	public static void readInFile(String fileName, ArrayList<Job> task) {
-
+	public static void readInFile(String fileName, Heap<Job> task) {
+		ArrayList<String> tempDate = new ArrayList<String>();
 		// Reads in Files
 		try {
 			Scanner read = new Scanner(new File(fileName));
 			do {
+			
 				String line = read.nextLine();
 				String[] tokens = line.split(",");
-				task.add(new Job(tokens[0], tokens[1]));
+			
+				String tsk = tokens[ 0 ];
+				
+				
+				String date = tokens[ 1 ];
+				String[] dDate  = date.split("/");
+				for(int j = 0; j <dDate.length; j++){
+					tempDate.add();
+				}
+				
+				task.addNode(new Job(tsk, date));
+
+				
 			} while (read.hasNext());
 			read.close();
 		} catch (FileNotFoundException fnf) {
 			System.out.println("File was not found");
 		}
-
 	}
 
 	public static void menu() {
-		ArrayList<Job> task = new ArrayList<Job>();
+	Heap<Job> task = new Heap<Job>();
 
 		// read in file for songs
 		readInFile("taskList.txt", task);
 
 		// write file for songs
-		writeSongsToFile("taskList.txt", task);
+		//writeSongsToFile("taskList.txt", task);
 
 		boolean done = false;
 		while (!done) {
@@ -57,19 +69,20 @@ public class TasklistTest {
 
 			switch (choose) {
 			//1. Display the list of tasks
-			case 1:
+			case 1:	displayList(task);
+		
 				break;
 				//2. Display current task.
-			case 2:
+			case 2:	displayCtask(task);
 				break;
 				//3. Add a new item to the task list
-			case 3:
+			case 3:	addTask(task);
 				break;
 				//4. Mark Complete
-			case 4:
+			case 4:	markComplete(task);
 				break;
 				//5. Postpone next task
-			case 5:
+			case 5:	postponeNextTask(task);
 				break;
 				//6. Quit
 			case 6:
@@ -83,13 +96,33 @@ public class TasklistTest {
 
 		}
 	}
+	
+	public static void displayList(Heap<Job> task){
+			task.PrintHeap();
+	}
+	
+	public static void displayCtask(Heap<Job> task){
+		
+	}
+	
+	public static void addTask(Heap<Job> task){
+		
+	}
+	
+	public static void markComplete(Heap<Job> task){
+		
+	}
+	
+	public static void postponeNextTask(Heap<Job> task){
+		
+	}
 
-	public static void writeSongsToFile(String fileName, ArrayList<Job> task) {
+	public static void writeSongsToFile(String fileName, Heap<Job> task) {
 		try {
 			PrintWriter writer = new PrintWriter(fileName);
-			for (Job p : task) {
+			while(!task.isEmpty()){
 
-				writer.println(p.toString());
+				writer.println(task.toString());
 			}
 			writer.close();
 		} catch (FileNotFoundException fnf) {

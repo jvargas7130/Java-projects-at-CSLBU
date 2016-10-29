@@ -39,22 +39,6 @@ public class Song implements Comparable<Song> {
 		return rating;
 	}
 	
-	//setters
-	public void setTitle(String t){
-		title = t;
-	}
-	
-	public void setArtist(String a){
-		artist = a;
-	}
-	
-	public void setAlbum(String aB){
-		album = aB;
-	}
-	
-	public void setRating(String r){
-		rating = r;
-	}
 	
 	//tostring
 	@Override
