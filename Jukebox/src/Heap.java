@@ -51,6 +51,8 @@ public class Heap<T extends Comparable<T>> {
 	}
 
 	public T removeMin() {
+		
+		
 		T min = heap.get(0);
 		int index = heap.size() - 1;
 		T last = heap.remove(index);
