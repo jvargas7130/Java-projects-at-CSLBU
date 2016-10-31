@@ -17,7 +17,14 @@ public class TasklistTest {
 		menu();
 
 	}
-
+	
+	/**
+	 * Read in file reads the list of task from a text file and 
+	 * sotres them in a heap
+	 * 
+	 * @param fileName text file is read in 
+	 * @param task is the heap where they are stored at
+	 */
 	public static void readInFile(String fileName, Heap<Job> task) {
 		// ArrayList<String> tempDate = new ArrayList<String>();
 		// Reads in Files
@@ -45,7 +52,12 @@ public class TasklistTest {
 			System.out.println("File was not found");
 		}
 	}
-
+	
+	/**
+	 * Menu displays the menu for a user to chose from. The menu repeateats until
+	 * the user quits
+	 * 
+	 */
 	public static void menu() {
 		Heap<Job> task = new Heap<Job>();
 
@@ -91,7 +103,7 @@ public class TasklistTest {
 			// 6. Quit
 			case 6:
 				System.out.println("You have quit. Now savig.... ");
-				writeSongsToFile("taskList.txt", task);
+				writeTaskToFile("taskList.txt", task);
 				done = true;
 				break;
 
@@ -102,7 +114,12 @@ public class TasklistTest {
 
 		}
 	}
-
+	
+	/**
+	 * Display list  method displays the full list of task from the heap print 
+	 * 
+	 * @param task heap object is passed in 
+	 */
 	public static void displayList(Heap<Job> task) {
 		if (!task.isEmpty()) {
 			task.PrintHeap();
@@ -111,7 +128,13 @@ public class TasklistTest {
 		}
 
 	}
-
+	
+	/**
+	 * Display current task displays the current taks thats at the top of 
+	 * the heap
+	 * 
+	 * @param task heap object is passed in 
+	 */
 	public static void displayCtask(Heap<Job> task) {
 		if (!task.isEmpty()) {
 			System.out.println(task.getNodeAt(0).getTaskName() + task.getNodeAt(0).getDueDate());
@@ -120,7 +143,12 @@ public class TasklistTest {
 		}
 
 	}
-
+	
+	/**
+	 * Add task method had user input a new task and date
+	 * 
+	 * @param task heap object is passed in 
+	 */
 	public static void addTask(Heap<Job> task) {
 
 		Scanner in = new Scanner(System.in);
@@ -133,7 +161,12 @@ public class TasklistTest {
 		task.addNode(new Job(newTask, date));
 
 	}
-
+	
+	/**
+	 * Mark complete deletes the current task and displays the next. 
+	 * 
+	 * @param task heap object is passed in 
+	 */
 	public static void markComplete(Heap<Job> task) {
 
 		if (!task.isEmpty()) {
@@ -143,7 +176,12 @@ public class TasklistTest {
 		}
 
 	}
-
+	
+	/**
+	 * Post pone next task promps user for new rating , remove and readd to list
+	 * 
+	 * @paramtasktask heap object is passed in 
+	 */
 	public static void postponeNextTask(Heap<Job> task) {
 		if (!task.isEmpty()) {
 			Scanner in = new Scanner(System.in);
@@ -163,7 +201,13 @@ public class TasklistTest {
 
 	}
 
-	public static void writeSongsToFile(String fileName, Heap<Job> task) {
+	/**
+	 * WriteTaskToFile writes task list to file
+	 * 
+	 * @param fileName name of file 
+	 * @param Task that are stored in the Heap
+	 */
+	public static void writeTaskToFile(String fileName, Heap<Job> task) {
 		try {
 			PrintWriter writer = new PrintWriter(fileName);
 			while (!task.isEmpty()) {

@@ -1,25 +1,59 @@
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * Job cllass implements  the comparable interface.  It holds toghether a task which consist
+ * of taskName and duedate. 
+ * 
+ * @author Jesus Vargas
+ *
+ */
 public class Job implements Comparable<Job> {
-
+	
+	/**
+	 * Taskname instant variable of Job
+	 */
 	private String taskName;
-
+	/**
+	 * duedate instant variable of Job
+	 */
 	private String dueDate;
-
+	
+	/**
+	 * Job Constructor
+	 * 
+	 * @param t passes in job string value
+	 * @param d passes in duedate string value
+	 */
 	public Job(String t, String d) {
 		taskName = t;
 		dueDate = d;
 	}
-
+	
+	/**
+	 * Task Name accessor
+	 * 
+	 * @return taskName string value
+	 */
 	public String getTaskName() {
 		return taskName;
 	}
-
+	
+	/**
+	 * Due Date accessor
+	 * 
+	 * @return
+	 */
 	public String getDueDate() {
 		return dueDate;
 	}
-
+	
+	/**
+	 * Month accessor splits the month, stores it 
+	 * as an int and returns it
+	 * 
+	 * @return month integer value 
+	 */
 	public int getMonth() {
 
 		String dateTimeSplit[] = dueDate.split(" ");
@@ -30,52 +64,77 @@ public class Job implements Comparable<Job> {
 
 		return month;
 	}
-
+	/**
+	 * Day accessor splits the day, stores it 
+	 * as an int and returns it
+	 * 
+	 * @return day integer value
+	 */
 	public int getDay() {
 		String dateTimeSplit[] = dueDate.split(" ");
 		String date = dateTimeSplit[0];
 		String monthDayYear[] = date.split("/");
 
-		int month = Integer.parseInt(monthDayYear[1]);
+		int day = Integer.parseInt(monthDayYear[1]);
 
-		return month;
+		return day;
 	}
-
+	/**
+	 * Year accessor splits the year, stores it 
+	 * as an int and returns it
+	 * 
+	 * @return year integer value
+	 */
 	public int getYear() {
 		String dateTimeSplit[] = dueDate.split(" ");
 		String date = dateTimeSplit[0];
 		String monthDayYear[] = date.split("/");
 
-		int month = Integer.parseInt(monthDayYear[2]);
+		int year = Integer.parseInt(monthDayYear[2]);
 
-		return month;
+		return year;
 	}
-
+	/**
+	 * Hour accessor splits the month, stores it 
+	 * as an int and returns it
+	 * 
+	 * @return hour integer value
+	 */
 	public int getHour() {
 		String dateTimeSplit[] = dueDate.split(" ");
 		String date = dateTimeSplit[0];
 		String hourMinute[] = date.split(":");
 
-		int month = Integer.parseInt(hourMinute[0]);
+		int hour = Integer.parseInt(hourMinute[0]);
 
-		return month;
+		return hour;
 	}
-
+	/**
+	 * Minute accessor splits the month, stores it 
+	 * as an int and returns it
+	 * 
+	 * @return minute integer value
+	 */
 	public int getMinute() {
 		String dateTimeSplit[] = dueDate.split(" ");
 		String date = dateTimeSplit[0];
 		String hourMinute[] = date.split(":");
 
-		int month = Integer.parseInt(hourMinute[1]);
+		int minute = Integer.parseInt(hourMinute[1]);
 
-		return month;
+		return minute;
 	}
 	
+	/**
+	 * Tostring method prints the job 
+	 * 
+	 * @return taskName + "," + dueDate
+	 */
 	@Override
-	public String toString(){
-		
-		return taskName+"," + dueDate;
-		
+	public String toString() {
+
+		return taskName + "," + dueDate;
+
 	}
 
 	/**
@@ -93,41 +152,41 @@ public class Job implements Comparable<Job> {
 		int result = 0;
 
 		// check by year
-		if (getYear() > j.getYear()) {
+		if (getYear() < j.getYear()) {
 			result = -1;
-		} else if (getYear() < j.getYear()) {
+		} else if (getYear() > j.getYear()) {
 
 			result = 1;
 		} else if (getYear() == j.getYear()) {
 
 			// check by month
-			if (getMonth() > j.getMonth()) {
+			if (getMonth() < j.getMonth()) {
 				result = -1;
-			} else if (getMonth() < j.getMonth()) {
+			} else if (getMonth() > j.getMonth()) {
 
 				result = 1;
 			} else if (getMonth() == j.getMonth()) {
 
 				// check by day
-				if (getDay() > j.getDay()) {
+				if (getDay() < j.getDay()) {
 					result = -1;
-				} else if (getDay() < j.getDay()) {
+				} else if (getDay() > j.getDay()) {
 
 					result = 1;
 				} else if (getDay() == j.getDay()) {
 
 					// check by hour
-					if (getHour() > j.getHour()) {
+					if (getHour() < j.getHour()) {
 						result = -1;
-					} else if (getHour() < j.getMonth()) {
+					} else if (getHour() > j.getMonth()) {
 
 						result = 1;
 					} else if (getHour() == j.getHour()) {
 
 						// check by minute
-						if (getMinute() > j.getMinute()) {
+						if (getMinute() < j.getMinute()) {
 							result = -1;
-						} else if (getMinute() < j.getMinute()) {
+						} else if (getMinute() > j.getMinute()) {
 
 							result = 1;
 						} else if (getMinute() == j.getMinute()) {

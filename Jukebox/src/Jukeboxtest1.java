@@ -17,19 +17,19 @@ import java.util.Scanner;
 public class Jukeboxtest1 {
 
 	public static void main(String[] args) {
-		Heap<Song> h = new Heap<Song>();
-		menu(h);
+		Heap<Song> song = new Heap<Song>();
+		menu(song);
 	}
 
 	/**
 	 * ReadInFile reads in song list and stores them in an array *
 	 * 
-	 * @param fileName
-	 *            passes in songlist
-	 * @param songs
-	 *            arraulist to be stored
+	 * @param fileName  passes in songlist
+	 *          
+	 * @param songs arraulist to be stored
+	 *           
 	 */
-	public static void readInFile(String fileName, Heap<Song> h) {
+	public static void readInFile(String fileName, Heap<Song> song) {
 
 		// Reads in Files
 		try {
@@ -38,7 +38,7 @@ public class Jukeboxtest1 {
 
 				String line = read.nextLine();
 				String[] tokens = line.split(",");
-				h.addNode(new Song(tokens[0], tokens[1], tokens[2], tokens[3]));
+				song.addNode(new Song(tokens[0], tokens[1], tokens[2], tokens[3]));
 
 			} while (read.hasNext());
 			read.close();
@@ -48,11 +48,16 @@ public class Jukeboxtest1 {
 
 	}
 
-	public static void menu(Heap<Song> h) {
+	/**
+	 * Menu didplays menu and repeats menu untill user quits
+	 * 
+	 * @param song heap is passedin
+	 */
+	public static void menu(Heap<Song> song) {
 
 		// read in file for songs
 
-		readInFile("songs.txt", h);
+		readInFile("songs.txt", song);
 
 		// write file for songs
 		//
@@ -71,29 +76,29 @@ public class Jukeboxtest1 {
 			switch (choose) {
 			// Display the list of songs
 			case 1:
-				listSongs(h);
+				listSongs(song);
 				break;
 			// Display current song.
 			case 2:
-				displayCSong(h);
+				displayCSong(song);
 				break;
 			// Add a new song to the list
 			case 3:
-				addSong(h);
+				addSong(song);
 				break;
 			// Play next song-removes song from list, displays new current song.
 			case 4:
-				playNextSong(h);
+				playNextSong(song);
 				break;
 			// Re-rate next song- prompts user for new rating , remove and
 			// re-add to list
 			case 5:
-				reRatesong(h);
+				reRatesong(song);
 				break;
 			// quit
 			case 6:
 				System.out.println("You have quit. Now savig.... ");
-				writeSongsToFile("songs.txt", h);
+				writeSongsToFile("songs.txt", song);
 
 				done = true;
 				break;
@@ -109,10 +114,10 @@ public class Jukeboxtest1 {
 	/**
 	 * Listsongs displays the list of songs
 	 */
-	public static void listSongs(Heap<Song> h) {
+	public static void listSongs(Heap<Song> song) {
 
-		if (!h.isEmpty()) {
-			h.PrintHeap();
+		if (!song.isEmpty()) {
+			song.PrintHeap();
 		} else {
 			System.out.println("List is empty");
 		}
@@ -123,10 +128,10 @@ public class Jukeboxtest1 {
 	 * DisplayCSong displays the current song
 	 * 
 	 */
-	public static void displayCSong(Heap<Song> h) {
-		if (!h.isEmpty()) {
-			System.out.println(h.getNodeAt(0).getTitle() + " " + h.getNodeAt(0).getArtist() + " "
-					+ h.getNodeAt(0).getAlbum() + " " + h.getNodeAt(0).getRating());
+	public static void displayCSong(Heap<Song> song) {
+		if (!song.isEmpty()) {
+			System.out.println(song.getNodeAt(0).getTitle() + " " + song.getNodeAt(0).getArtist() + " "
+					+ song.getNodeAt(0).getAlbum() + " " + song.getNodeAt(0).getRating());
 
 		} else {
 			System.out.println("List is empty");
@@ -138,7 +143,7 @@ public class Jukeboxtest1 {
 	 * Addsong method adds a song to the list
 	 * 
 	 */
-	public static void addSong(Heap<Song> h) {
+	public static void addSong(Heap<Song> song) {
 		Scanner in = new Scanner(System.in);
 
 		System.out.println("Enter Title");
@@ -150,7 +155,7 @@ public class Jukeboxtest1 {
 		System.out.println("Enter Rating");
 		String rating = in.nextLine();
 
-		h.addNode(new Song(title, artist, album, rating));
+		song.addNode(new Song(title, artist, album, rating));
 
 	}
 
@@ -158,9 +163,9 @@ public class Jukeboxtest1 {
 	 * Playnextsong plays -removes song from list, displays new current song.
 	 * 
 	 */
-	public static void playNextSong(Heap<Song> h) {
-		if (!h.isEmpty()) {
-			h.removeMin();
+	public static void playNextSong(Heap<Song> song) {
+		if (!song.isEmpty()) {
+			song.removeMin();
 		} else {
 			System.out.println("List is empty");
 		}
@@ -171,20 +176,20 @@ public class Jukeboxtest1 {
 	 * Re-rate next song- prompts user for new rating , remove and re-add to
 	 * list
 	 */
-	public static void reRatesong(Heap<Song> h) {
+	public static void reRatesong(Heap<Song> song) {
 
-		if (!h.isEmpty()) {
+		if (!song.isEmpty()) {
 			Scanner in = new Scanner(System.in);
-			String title = h.getNodeAt(0).getTitle();
-			String artist = h.getNodeAt(0).getArtist();
-			String album = h.getNodeAt(0).getAlbum();
+			String title = song.getNodeAt(0).getTitle();
+			String artist = song.getNodeAt(0).getArtist();
+			String album = song.getNodeAt(0).getAlbum();
 
 			System.out.println("Enter rate");
 			int rate = CheckInput.checkInt(1, 5);
 			String strRate = "" + rate;
-			h.removeMin();
+			song.removeMin();
 
-			h.addNode(new Song(title, artist, album, strRate));
+			song.addNode(new Song(title, artist, album, strRate));
 		} else {
 			System.out.println("List is empty");
 		}
@@ -192,17 +197,17 @@ public class Jukeboxtest1 {
 	}
 
 	/**
-	 * WriteSongsToFile writes a songs to file
+	 * WriteSongsToFile writes  songs to file
 	 * 
-	 * @param fileName
-	 * @param songs
+	 * @param fileName name of file 
+	 * @param songs that are stored in the Heap
 	 */
-	public static void writeSongsToFile(String fileName, Heap<Song> h) {
+	public static void writeSongsToFile(String fileName, Heap<Song> song) {
 		try {
 			PrintWriter writer = new PrintWriter(fileName);
-			while (!h.isEmpty()) {
+			while (!song.isEmpty()) {
 
-				writer.println(h.removeMin().toString());
+				writer.println(song.removeMin().toString());
 
 			}
 			writer.close();
