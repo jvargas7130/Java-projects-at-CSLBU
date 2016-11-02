@@ -37,13 +37,6 @@ public class TasklistTest {
 
 				String tsk = tokens[0];
 				String date = tokens[1];
-
-				// String date = tokens[ 1 ];
-				// String[] dDate = date.split("/");
-				// for(int j = 0; j <dDate.length; j++){
-				// tempDate.add(dDate[j]);
-				// }
-
 				task.addNode(new Job(tsk, date));
 
 			} while (read.hasNext());
@@ -178,9 +171,9 @@ public class TasklistTest {
 	}
 	
 	/**
-	 * Post pone next task promps user for new rating , remove and readd to list
+	 *  Post pone next task promps user for new rating , remove and readd to list
 	 * 
-	 * @paramtasktask heap object is passed in 
+	 * @param task heap object is passed in 
 	 */
 	public static void postponeNextTask(Heap<Job> task) {
 		if (!task.isEmpty()) {
@@ -205,7 +198,7 @@ public class TasklistTest {
 	 * WriteTaskToFile writes task list to file
 	 * 
 	 * @param fileName name of file 
-	 * @param Task that are stored in the Heap
+	 * @param task that are stored in the Heap
 	 */
 	public static void writeTaskToFile(String fileName, Heap<Job> task) {
 		try {

@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * 
  * @author jvarg
  *
- * @param <T>
  */
 public class Heap<T extends Comparable<T>> {
 
@@ -14,7 +13,7 @@ public class Heap<T extends Comparable<T>> {
 	 * Generic heap class
 	 */
 	private ArrayList<T> heap;
-
+ 
 	/**
 	 * Heap constructor
 	 */
@@ -66,8 +65,8 @@ public class Heap<T extends Comparable<T>> {
 	/**
 	 * getCloc gets right child location
 	 * 
-	 * @param i
-	 *            integer value
+	 * @param i integer value
+	 *           
 	 * @return location value
 	 */
 	public int getRCLoc(int i) {
@@ -77,8 +76,8 @@ public class Heap<T extends Comparable<T>> {
 	/**
 	 * getNode gets the node at that loation
 	 * 
-	 * @param i
-	 *            integer value
+	 * @param i integer value
+	 *           
 	 * @return the node
 	 */
 	public T getNodeAt(int i) {
@@ -94,8 +93,8 @@ public class Heap<T extends Comparable<T>> {
 	/**
 	 * addNode adds a node to the heap
 	 * 
-	 * @param line
-	 *            node value
+	 * @param n gengeric object is passed in
+	 *          
 	 */
 	public void addNode(T n) {
 		heap.add(null);
@@ -148,7 +147,7 @@ public class Heap<T extends Comparable<T>> {
 					done = true;
 				}
 
-				done = true;
+			
 			}
 
 			heap.set(index, root);

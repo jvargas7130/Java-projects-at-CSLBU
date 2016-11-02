@@ -74,7 +74,7 @@ public class Job implements Comparable<Job> {
 		String dateTimeSplit[] = dueDate.split(" ");
 		String date = dateTimeSplit[0];
 		String monthDayYear[] = date.split("/");
-
+		//System.out.println(monthDayYear[1] + " ");
 		int day = Integer.parseInt(monthDayYear[1]);
 
 		return day;
@@ -101,10 +101,13 @@ public class Job implements Comparable<Job> {
 	 * @return hour integer value
 	 */
 	public int getHour() {
+		
+		
+		
 		String dateTimeSplit[] = dueDate.split(" ");
 		String date = dateTimeSplit[0];
-		String hourMinute[] = date.split(":");
-
+		String hourMinute[] = dateTimeSplit[1].split(":");
+			//System.out.println(hourMinute[0]);
 		int hour = Integer.parseInt(hourMinute[0]);
 
 		return hour;
@@ -118,7 +121,7 @@ public class Job implements Comparable<Job> {
 	public int getMinute() {
 		String dateTimeSplit[] = dueDate.split(" ");
 		String date = dateTimeSplit[0];
-		String hourMinute[] = date.split(":");
+		String hourMinute[] = dateTimeSplit[1].split(":");
 
 		int minute = Integer.parseInt(hourMinute[1]);
 
@@ -155,7 +158,6 @@ public class Job implements Comparable<Job> {
 		if (getYear() < j.getYear()) {
 			result = -1;
 		} else if (getYear() > j.getYear()) {
-
 			result = 1;
 		} else if (getYear() == j.getYear()) {
 
@@ -163,7 +165,6 @@ public class Job implements Comparable<Job> {
 			if (getMonth() < j.getMonth()) {
 				result = -1;
 			} else if (getMonth() > j.getMonth()) {
-
 				result = 1;
 			} else if (getMonth() == j.getMonth()) {
 
@@ -171,15 +172,13 @@ public class Job implements Comparable<Job> {
 				if (getDay() < j.getDay()) {
 					result = -1;
 				} else if (getDay() > j.getDay()) {
-
 					result = 1;
 				} else if (getDay() == j.getDay()) {
 
 					// check by hour
 					if (getHour() < j.getHour()) {
 						result = -1;
-					} else if (getHour() > j.getMonth()) {
-
+					} else if (getHour() > j.getHour()) {
 						result = 1;
 					} else if (getHour() == j.getHour()) {
 
@@ -187,7 +186,6 @@ public class Job implements Comparable<Job> {
 						if (getMinute() < j.getMinute()) {
 							result = -1;
 						} else if (getMinute() > j.getMinute()) {
-
 							result = 1;
 						} else if (getMinute() == j.getMinute()) {
 							result = taskName.compareToIgnoreCase(j.getTaskName());
