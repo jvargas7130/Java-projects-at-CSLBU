@@ -1,13 +1,10 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
 
-import javax.swing.JPanel;
+import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+
 
 /**
  * Panel crates an rray of six cities, three batteries , and ArrayLIst for
@@ -33,19 +30,34 @@ public class Panel extends JPanel implements MouseListener,MouseMotionListener, 
 	
 	
 	public void paintComponent(Graphics g){
-			super.paintComponents(g);
+			super.paintComponent(g);
 		
-		g.drawRect(0, 805, 100, 200);
-		g.drawRect(200, 750, 130,300 );
-		g.drawRect(400, 750, 130,300 );
-		g.drawRect(600, 750, 130,350 );
-		g.drawRect(800, 750, 100,320 );
-		g.drawRect(1000, 805, 100,300 );
-		g.drawRect(1000, 750, 105,300 );
-		g.drawRect(1200, 805, 100,200 );
-		g.drawRect(1400, 750, 130,350 );
-		g.drawRect(1600, 750, 130,200 );
-		g.drawRect(1800, 750, 100,200);
+		//Set pointer	
+		Point p = new Point(getWidth() - 960,getHeight() - 540);	
+		
+		//city object
+		City c = new City(p,Color.GREEN);
+		c.draw(g,getHeight(), getWidth() );//draw rectanglebuildings
+		
+		
+		Battery b = new Battery(p,Color.RED);
+	    b.draw(g,getHeight(), getWidth());
+	    
+	    
+	    
+	    Thread a = new Thread("A");
+		
+		int x = (int) p.getX();
+	
+		int y =	(int) p.getY();
+	
+		//crosshair
+	g.setColor(Color.RED);
+	g.drawLine(x-30, y, x+30,y);
+	g.drawLine(x, y-30, x,y+30);
+
+		
+		
 	}
 
 	

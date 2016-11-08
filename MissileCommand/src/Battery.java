@@ -16,12 +16,16 @@ public class Battery extends Rectangle {
 	private Color color;
 	
 	
-	Battery(Point loc, Color c){
-		
+	public Battery(Point loc, Color c){
+		color = c;
 	}
 	
-	public void draw(Graphics g){
+	public  void draw(Graphics g, int height,int width){
+		g.setColor(color);
 		
+		g.drawRect(width - 1920,  height - 100, 70,100 );//battery
+		g.drawRect(width - 920, height  - 100, 70,100 );//battery
+		g.drawRect(width - 120,  height  - 100, 70,100);//battery
 	}
 	
 	public int getNumMissiles(){
@@ -40,5 +44,7 @@ public class Battery extends Rectangle {
 	public Boolean isHit(Point p){
 		return true;
 	}
+
+
 	
 }
