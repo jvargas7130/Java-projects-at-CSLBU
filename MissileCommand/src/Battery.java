@@ -17,15 +17,15 @@ public class Battery extends Rectangle {
 	
 	
 	public Battery(Point loc, Color c){
+		 x =  (int) loc.getX();
+	     y =  (int) loc.getY();
+		
 		color = c;
 	}
 	
 	public  void draw(Graphics g, int height,int width){
 		g.setColor(color);
-		
-		g.drawRect(width - 1920,  height - 100, 70,100 );//battery
-		g.drawRect(width - 920, height  - 100, 70,100 );//battery
-		g.drawRect(width - 120,  height  - 100, 70,100);//battery
+		g.drawRect( x, y, 100, 100);//building
 	}
 	
 	public int getNumMissiles(){

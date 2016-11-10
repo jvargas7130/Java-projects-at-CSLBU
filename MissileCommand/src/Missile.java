@@ -20,12 +20,23 @@ public class Missile extends Rectangle {
 	private boolean active;
 	
 	
-	public  Missile(Point s, Point e){
+	public  Missile(Point s, Point e, int sp, int t, Color c){
+		
+		start = s;
+		location = e;
+		speed = sp;
+	    type   = t;
+	    color = c;
+		
+		
+		
 		
 	}
 	
 	public void move(){
 		
+		
+		p.translate(dx,dy);
 	}
 	
 	public void draw(Graphics g){
