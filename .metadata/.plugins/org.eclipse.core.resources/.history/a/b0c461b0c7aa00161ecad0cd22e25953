@@ -1,0 +1,80 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
+
+/**
+ * Missile class is used for both the attackers for launch
+ * Missile extends rectangle
+ * 
+ * @author Jesus Vargas
+ *
+ */
+public class Missile extends Rectangle {
+	private Point start; 
+	private Point location;
+	private Point end;
+	private double speed;
+	private Color color;
+	private int type;
+	private boolean active = true;
+	private double dx, dy, size;
+	
+	//start point, end point, speed, type, color
+	public  Missile(Point s, Point e, double sp, int t, Color c){
+		
+		start = s;
+		end = e;
+		speed = sp;
+	    type   = t;
+	    color = c;
+		
+		location = s;
+		
+		
+	}
+	
+	public void move(){
+		
+
+		
+		double x1 =(double) start.getX();
+		double y1 = (double) start.getY();
+		
+		double x2 = (double) end.getX();
+		double y2 = (double) end.getY();
+		
+		
+		dx = x2 - x1;
+		dy = y2 - y1;
+		size = (int) Math.sqrt((dx*dx) + (dy*dy));
+		
+		double R = speed;
+		
+		double newX = location.getX() +(dx *R/size);
+		double newY =location.getY() + (dy *R/size);
+		
+		if(size <= speed){
+		
+		  active = false;
+		}
+
+		location = new Point((int) newX,(int) newY );
+	}
+	
+	public void draw(Graphics g){
+		g.fillRect((int) location.getX(),(int) location.getY(), 20, 20);
+	}
+	
+	public boolean isActive(){
+		
+		return active;
+		
+	}
+	
+	public Point getLocPoint(){
+		return location;
+		
+	}
+	
+}

@@ -1,0 +1,435 @@
+
+import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+/**
+ * Panel crates an rray of six cities, three batteries , and ArrayLIst for
+ * temporary object like missiles and explosions.
+ * 
+ * 
+ * 
+ * @author Jesus Vargas
+ *
+ */
+public class Panel extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
+
+	private City city[];
+	private Battery battery[];
+	private ArrayList<Missile> m;
+	private ArrayList<Explosion> ex;
+	private ArrayList<Explosion> collision;
+	private Point crossH;
+
+	public Panel() {
+		collision = new ArrayList<Explosion>();
+		ex = new ArrayList<Explosion>();
+
+		// initialize cross hair
+		crossH = new Point(getWidth() + 960, getHeight() + 540);
+
+		// add mouse motion
+		addMouseMotionListener(this);
+		addMouseListener(this);
+		addKeyListener(this);
+		setFocusable(true);
+
+		// set backround of panel blue
+		this.setBackground(Color.BLUE);
+
+		// 6 citys
+		int counter = 0;
+		int xcord = 220;
+		city = new City[10];
+		for (int i = 0; i < 6; i++) {
+
+			if (counter < 2) {
+				city[i] = new City(new Point(xcord, 835), Color.GREEN);
+				xcord = xcord + 220;
+			} else {
+				city[i] = new City(new Point(xcord, 835), Color.GREEN);
+				xcord = xcord + 440;
+				counter = -1;
+			}
+
+			counter++;
+		}
+
+		// 3 Batteries
+		int xcord2 = 0;
+		battery = new Battery[3];
+		for (int i = 0; i < 3; i++) {
+			battery[i] = new Battery(new Point(xcord2, 905), Color.RED);
+			xcord2 = xcord2 + 880;
+		}
+
+		// missle
+		m = new ArrayList<Missile>();
+		// start point, end point, speed, type, color
+
+		// click misssiles`
+		int shots2 = 0;
+
+		Thread a = new Thread() {
+			public void run() {
+				int count = 0;
+
+				int shots = 0;
+				int time = 0;
+				int xcord3 = 0;
+				int ycord3 = 0;
+				int number = 0;
+				int i = 0;
+
+				while (true) {
+					System.out.println(count);
+
+					int destination = (int) (Math.random() * 2) + 1;
+					if (count == time) {
+						System.out.println("time" + time);
+						if (destination == 1) {
+							int c = (int) (Math.random() * 6);
+							xcord3 = city[c].x;
+							ycord3 = city[c].y;
+
+						} else {
+							int b = (int) (Math.random() * 3);
+							xcord3 = battery[b].x;
+							ycord3 = battery[b].y;
+
+						}
+
+						// enemy starting point
+						int enemy = (int) (Math.random() * 1080) + 1;
+
+						m.add(new Missile(new Point(enemy, -100), new Point(xcord3, ycord3), 5, 1, Color.RED));
+						shots = shots + 220;
+						time = time + 300;
+
+						i++;
+					}
+					count++;
+
+					// missile is active and true
+					for (int j = 0; j < m.size(); j++) {
+
+						if (m.get(j).isActive() == true) {
+							m.get(j).move();
+
+						}
+						// missile reaches its destination and is added to
+						// explotion
+						if (m.get(j).isActive() == false) {
+
+							// make city disapear
+							for (int k = 0; k < 6; k++) {
+
+								city[k].isHit(m.get(j).getLocPoint());
+
+							}
+
+							// make battery disapear
+							for (int k = 0; k < 3; k++) {
+
+								battery[k].isHit(m.get(j).getLocPoint());
+
+							}
+
+							ex.add(new Explosion(m.get(j).getLocPoint()));
+
+							m.remove(j);
+
+						}
+
+					}
+
+					// missile explodes
+					for (int k = 0; k < ex.size(); k++) {
+
+						if (ex.get(k).isActive() == true) {
+							ex.get(k).move();
+
+							// missile check
+							for (int j = 0; j < m.size(); j++) {
+
+								// checks for collisionSys
+
+								if (ex.get(k).contains(m.get(j).getLocPoint())) {
+									collision.add(new Explosion((m.get(j).getLocPoint())));
+									m.remove(j);
+								}
+							}
+
+						}
+
+						if (ex.get(k).isActive() == false) {
+							ex.remove(k);
+						}
+
+					}
+
+					// animates collisions and deletes them
+					for (int k = 0; k < collision.size(); k++) {
+
+						if (collision.get(k).isActive() == true) {
+							collision.get(k).move();
+						}
+						if (collision.get(k).isActive() == false) {
+							collision.remove(k);
+						}
+
+					}
+
+					// delete city
+
+					repaint();
+
+					try {
+						Thread.sleep(9); // ~60 fps
+					} catch (InterruptedException e) {
+
+					}
+
+				}
+
+			}
+		};
+		a.start();
+	}
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		for (int i = 0; i < 6; i++) {
+			if (city[i].isActive() == true) {
+				city[i].draw(g);
+			}
+
+		}
+
+		for (int i = 0; i < 3; i++) {
+			if (battery[i].isActive() == true) {
+				battery[i].draw(g);
+			}
+		}
+
+		// if(missile[0].isActive() == true){
+		for (int i = 0; i < m.size(); i++) {
+			m.get(i).draw(g);
+		}
+
+		for (int i = 0; i < ex.size(); i++) {
+			ex.get(i).draw(g);
+		}
+
+		for (int i = 0; i < collision.size(); i++) {
+			collision.get(i).draw(g);
+		}
+
+		int x = (int) crossH.getX();
+
+		int y = (int) crossH.getY();
+
+		// crosshair
+		g.setColor(Color.RED);
+		g.drawLine(x - 30, y, x + 30, y);
+		g.drawLine(x, y - 30, x, y + 30);
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_1) {
+			m.add(new Missile(new Point(battery[0].x, battery[0].y),
+					new Point((int) crossH.getX(), (int) crossH.getY()), 8, 1, Color.WHITE));
+			battery[0].removeMissile();
+			System.out.println("Pressed 1");
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_2) {
+
+			m.add(new Missile(new Point(battery[1].x, battery[1].y),
+					new Point((int) crossH.getX(), (int) crossH.getY()), 8, 1, Color.WHITE));
+			battery[1].removeMissile();
+			System.out.println("Pressed 2");
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_3) {
+			m.add(new Missile(new Point(battery[2].x, battery[2].y),
+					new Point((int) crossH.getX(), (int) crossH.getY()), 8, 1, Color.WHITE));
+			battery[2].removeMissile();
+			System.out.println("Pressed 3");
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			int x2 = (int) crossH.getX();
+			int y2 = (int) crossH.getY();
+
+			int size1 = 0;
+			int size2 = 0;
+			int size3 = 0;
+
+			for (int i = 0; i < 3; i++) {
+				int x1 = (int) battery[i].x;
+				int y1 = (int) battery[i].y;
+
+				int dx = x2 - x1;
+				int dy = y2 - y1;
+				if (i == 0) {
+					size1 = (int) Math.sqrt((dx * dx) + (dy * dy));
+				} else if (i == 1) {
+					size2 = (int) Math.sqrt((dx * dx) + (dy * dy));
+				} else if (i == 2) {
+					size3 = (int) Math.sqrt((dx * dx) + (dy * dy));
+				}
+
+			}
+			System.out.println("size" + size1);
+			System.out.println("size2 +" + size2);
+			System.out.println("size3" + size3);
+
+			if (size1 < size2 && size1 < size3) {
+				if (battery[0].getNumMissiles() > 0) {
+					m.add(new Missile(new Point(battery[0].x, battery[0].y),
+							new Point((int) crossH.getX(), (int) crossH.getY()), 8, 1, Color.WHITE));
+
+					battery[0].removeMissile();
+				}
+
+			} else if (size2 < size1 && size2 < size3) {
+				if (battery[1].getNumMissiles() > 0) {
+					m.add(new Missile(new Point(battery[1].x, battery[1].y),
+							new Point((int) crossH.getX(), (int) crossH.getY()), 8, 1, Color.WHITE));
+					battery[1].removeMissile();
+
+				}
+
+			} else if (size3 < size1 && size3 < size2) {
+				if (battery[2].getNumMissiles() > 0) {
+					m.add(new Missile(new Point(battery[2].x, battery[2].y),
+							new Point((int) crossH.getX(), (int) crossH.getY()), 8, 1, Color.WHITE));
+					battery[2].removeMissile();
+				}
+
+			}
+
+		}
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// crossH = new Point(getWidth() - 960, getHeight() - 540);
+		crossH = new Point((int) e.getX(), (int) e.getY());
+		System.out.println(crossH);
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int x2 = (int) e.getX();
+		int y2 = (int) e.getY();
+
+		int size1 = 0;
+		int size2 = 0;
+		int size3 = 0;
+
+		for (int i = 0; i < 3; i++) {
+			int x1 = (int) battery[i].x;
+			int y1 = (int) battery[i].y;
+
+			int dx = x2 - x1;
+			int dy = y2 - y1;
+			if (i == 0) {
+				size1 = (int) Math.sqrt((dx * dx) + (dy * dy));
+			} else if (i == 1) {
+				size2 = (int) Math.sqrt((dx * dx) + (dy * dy));
+			} else if (i == 2) {
+				size3 = (int) Math.sqrt((dx * dx) + (dy * dy));
+			}
+
+		}
+		System.out.println("size" + size1);
+		System.out.println("size2 +" + size2);
+		System.out.println("size3" + size3);
+
+		if (size1 < size2 && size1 < size3) {
+			if (battery[0].getNumMissiles() > 0) {
+					m.add(new Missile(new Point(battery[0].x, battery[0].y), new Point((int) e.getX(), (int) e.getY()), 8, 1,
+					Color.WHITE));
+
+			battery[0].removeMissile();
+			}
+		
+		} else if (size2 < size1 && size2 < size3) {
+			
+			if (battery[1].getNumMissiles() > 0) {
+				m.add(new Missile(new Point(battery[1].x, battery[1].y), new Point((int) e.getX(), (int) e.getY()), 8, 1,
+					Color.WHITE));
+				battery[1].removeMissile();
+			}
+			
+		} else if (size3 < size1 && size3 < size2) {
+			if (battery[2].getNumMissiles() > 0) {
+				m.add(new Missile(new Point(battery[2].x, battery[2].y), new Point((int) e.getX(), (int) e.getY()), 8, 1,
+				Color.WHITE));
+				battery[2].removeMissile();
+			}
+			
+		}
+
+		crossH = new Point(e.getX(), e.getY());
+		System.out.println(crossH);
+
+		if (contains(crossH)) {
+			System.out.println("clicked in panel");
+		}
+
+	}
+
+	public static void chooseCord() {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

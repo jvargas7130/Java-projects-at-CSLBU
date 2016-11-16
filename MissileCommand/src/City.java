@@ -14,29 +14,48 @@ import java.awt.Rectangle;
  */
 
 public class City extends Rectangle {
-	boolean active;
-	Color color;
+	private boolean active;
+	private Color color;
 	
 	public  City(Point loc, Color c){
-		
+		active = true;
 		 x =  (int) loc.getX();
 	     y =  (int) loc.getY();
-		
+	     height =170;
+	     width = 100;
+	 	
 		color = c;
 	}
 
-	public void draw(Graphics g,int  w, int h){
+	public void draw(Graphics g){
 		g.setColor(color);
-		g.drawRect( x, y, 100, 170);//building
+		g.fillRect(x, y, width, height);
+		//g.drawRect( x, y, height, width);//building
 	}
 	
 	public boolean isActive(){
-		return true;
+		return active;
+	}
+	public Point getLocPoint(){
+		return new Point(x,y);
+		
+	}
+public Boolean isHit(Point p){
+	boolean hit = false;
+	System.out.println("point" + p);
+	System.out.println("contains " + contains(p));
+	if(this.contains(p)){
+		System.out.println("inside contains");
+		
+		active = false;
+		hit = true;
 	}
 	
-	public Point getLocPoint(){
-		return null;
-		
+
+	
+	
+	
+	return hit;
 	}
 	
 	

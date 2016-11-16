@@ -1,0 +1,76 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
+
+/**
+ *Explosion class is used when a defenders missile reaches its target, an 
+ *explosion is triggered at that location. This explosion can destroy the
+ *attackers missiles. When the attackers missiles are destroyed , they also cause 
+ *and explosion that can destroy other missiles.  Explosion extends rectangle
+ * 
+ * 
+ * @author Jesus Vargas
+ *
+ */
+public class Explosion extends Rectangle {
+	private boolean expanding;
+	private boolean active;
+	
+	
+	public Explosion(Point p){
+		active = true;
+		expanding = true;
+		width = 5;
+		height = 5;
+		
+		 x = (int) p.getX();
+		 y = (int) p.getY();
+	}
+	
+	public void draw(Graphics g){
+		if(expanding == true){
+			g.setColor(Color.YELLOW);
+			g.fillOval(x - 200/2, y - 200/2 ,width , height);
+		}
+
+		
+	}
+	
+	public boolean move(){
+		
+		
+		if(expanding == true){
+			width++;
+			height++;
+			
+			
+		}else if (width == 200 && height == 200){
+			
+			expanding = false;
+		}
+		
+		
+		
+		return expanding;
+		
+	}
+	
+	public boolean isActive(){
+		
+		
+		return active;
+	}
+	
+	
+	public boolean contains(Point p){
+		return expanding;
+	}
+	
+	public Point getLocPoint(){
+		return null;
+		
+	}
+	
+
+}

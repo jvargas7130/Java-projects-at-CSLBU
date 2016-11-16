@@ -14,42 +14,79 @@ public class Missile extends Rectangle {
 	private Point start; 
 	private Point location;
 	private Point end;
-	private int speed;
+	private double speed;
 	private Color color;
 	private int type;
-	private boolean active;
+	private boolean active = true;
+	private double dx, dy, size;
 	
-	
-	public  Missile(Point s, Point e, int sp, int t, Color c){
+	//start point, end point, speed, type, color
+	public  Missile(Point s, Point e, double sp, int t, Color c){
 		
 		start = s;
-		location = e;
+		end = e;
 		speed = sp;
 	    type   = t;
 	    color = c;
 		
-		
+		location = s;
 		
 		
 	}
 	
 	public void move(){
 		
+
 		
-		p.translate(dx,dy);
+		double x1 =(double) start.getX();
+		double y1 = (double) start.getY();
+		
+		double x2 = (double) end.getX();
+		double y2 = (double) end.getY();
+		
+		
+		dx = x2 - x1;
+		dy = y2 - y1;
+		size =  Math.sqrt((dx*dx) + (dy*dy));
+		
+		double R = speed;
+		
+		double newX = location.getX() + (dx *(R/size));
+		double newY =location.getY() + (dy *(R/size));
+		
+		if(size <= speed){
+			System.out.println("newx " +newX);
+			System.out.println("newy " +newY);
+			location = new Point((int)end.getX(),(int) end.getY());
+		  active = false;
+		}else{
+			location.setLocation(newX,newY);
+		}
+
+		
 	}
 	
 	public void draw(Graphics g){
+		g.setColor(color);
 		
+		g.fillRect((int) location.getX(),(int) location.getY(), 20, 20);
+	
 	}
 	
+
 	public boolean isActive(){
+		
 		return active;
 		
 	}
 	
 	public Point getLocPoint(){
-		return end;
+		return location;
+		
+	}
+	
+	public int getType(){
+		return type;
 		
 	}
 	

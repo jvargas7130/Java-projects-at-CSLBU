@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -14,18 +15,28 @@ import java.awt.Rectangle;
 public class Battery extends Rectangle {
 	private int numMissiles;
 	private Color color;
+	private boolean active;
 	
 	
 	public Battery(Point loc, Color c){
 		 x =  (int) loc.getX();
 	     y =  (int) loc.getY();
-		
+	     
+	     width = 100;
+	     height = 100;
+	     
+	     active = true;
+		numMissiles = 10;
 		color = c;
 	}
 	
-	public  void draw(Graphics g, int height,int width){
+	public  void draw(Graphics g){
 		g.setColor(color);
-		g.drawRect( x, y, 100, 100);//building
+		//g.drawRect( x, y, width, height);//building
+		g.fillRect(x, y, width, height);
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Arial", Font.PLAIN,40));
+		g.drawString(" " + numMissiles, x,y+50 );
 	}
 	
 	public int getNumMissiles(){
@@ -33,16 +44,36 @@ public class Battery extends Rectangle {
 	}
 	
 	public void removeMissile(){
+		if(numMissiles > 0){
+			numMissiles--;
+		}
 		
 	}
 	
 	public Point getLocPoint(){
-		return null;
+		return new Point(x,y);
 		
 	}
 	
+	public boolean isActive(){
+		return active;
+	}
+	
 	public Boolean isHit(Point p){
-		return true;
+		System.out.println(p);
+		boolean hit = false;
+		
+		if(contains(p)){
+			numMissiles = 0;
+			active = false;
+			hit = true;
+		}
+		
+		
+		
+		
+		
+		return hit;
 	}
 
 

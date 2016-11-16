@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -15,32 +16,69 @@ import java.awt.Rectangle;
 public class Explosion extends Rectangle {
 	private boolean expanding;
 	private boolean active;
+	private Point center;
+
 	
 	
-	public void Explosion(Point p){
-		
+	public Explosion(Point p){
+		active = true;
+		expanding = true;
+		width = 5;
+		height = 5;
+		center = new Point((int) p.getX(),(int) p.getY());
+		super.setLocation(p);
+	
 	}
 	
 	public void draw(Graphics g){
 		
+			g.setColor(Color.YELLOW);
+			g.fillOval((int) center.getX() - width/2,(int) center.getY() - height/2,width , height);
+	
+		
 	}
 	
 	public boolean move(){
-		return active;
+		
+		
+		if(expanding == true){
+			width = width + 3;
+			height = height + 3;
+		
+			super.setLocation((int) center.getX() - width/2, (int) center.getY() - height/2);
+			super.setSize( width, height);
+			
+			expanding = true;
+		}
+		
+		
+		if (width >= 250 && height >= 250){
+			
+			expanding = false;
+			active = false;
+			
+		}
+		
+		
+		
+		return expanding;
 		
 	}
 	
 	public boolean isActive(){
+		
+		
 		return active;
 	}
 	
 	
 	public boolean contains(Point p){
-		return expanding;
+		return super.contains(p);
+		
 	}
 	
 	public Point getLocPoint(){
-		return null;
+		return new Point((int) center.getY(),(int) center.getY());
 		
 	}
 	
