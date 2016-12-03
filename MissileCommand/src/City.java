@@ -5,59 +5,89 @@ import java.awt.Rectangle;
 
 /**
  * 
- * @author j**
- * This class represents each of the cities the defender must protect.
- *Panel extends rectangle to use its location and collision detection methods
+ * This class represents each of the cities the defender must
+ * protect. Panel extends rectangle to use its location and collision
+ *  detection methods
  * 
  * @author jvarg
  *
  */
 
 public class City extends Rectangle {
+	
+	/**
+	 * acitve is true if city exist
+	 */
 	private boolean active;
+	
+	/**
+	 * color of city
+	 */
 	private Color color;
 	
-	public  City(Point loc, Color c){
+	/**
+	 * city constructor where variables are initialize
+	 * 
+	 * @param loc point object is passed in 
+	 * @param c color of city
+	 */
+	public City(Point loc, Color c) {
 		active = true;
-		 x =  (int) loc.getX();
-	     y =  (int) loc.getY();
-	     height =170;
-	     width = 100;
-	 	
+		x = (int) loc.getX();
+		y = (int) loc.getY();
+		height = 170;
+		width = 100;
+
 		color = c;
 	}
-
-	public void draw(Graphics g){
+	
+	
+	/**
+	 * draw method where city is drawn
+	 * 
+	 * @param g object is passed in 
+	 */
+	public void draw(Graphics g) {
 		g.setColor(color);
 		g.fillRect(x, y, width, height);
-		//g.drawRect( x, y, height, width);//building
+		// g.drawRect( x, y, height, width);//building
 	}
 	
-	public boolean isActive(){
+	/**
+	 * is active method accessor
+	 */
+	public boolean isActive() {
 		return active;
 	}
-	public Point getLocPoint(){
-		return new Point(x,y);
-		
-	}
-public Boolean isHit(Point p){
-	boolean hit = false;
-	System.out.println("point" + p);
-	System.out.println("contains " + contains(p));
-	if(this.contains(p)){
-		System.out.println("inside contains");
-		
-		active = false;
-		hit = true;
-	}
 	
+	/**
+	 *Point method accessor
+	 * 
+	 * @return current point
+	 */
+	public Point getLocPoint() {
+		return new Point(x, y);
 
-	
-	
-	
-	return hit;
 	}
 	
-	
-	
+	/**
+	 * checks to see if hit is in battery parameters
+	 * 
+	 * @param p point object of hit
+	 * @return hit if hit was true or false
+	 */
+	public boolean isHit(Point p) {
+		boolean hit = false;
+		System.out.println("point" + p);
+		System.out.println("contains " + contains(p));
+		if (this.contains(p)) {
+			System.out.println("inside contains");
+
+			active = false;
+			hit = true;
+		}
+
+		return hit;
+	}
+
 }

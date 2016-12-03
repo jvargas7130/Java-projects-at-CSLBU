@@ -11,8 +11,16 @@ import java.awt.event.*;
  *
  */
 public class Frame extends JFrame{
+	
+	/**
+	 * panel instant variable
+	 */
 	private Panel p;
 	
+	/**
+	 * frame constructor where new panel is created
+	 * 
+	 */
 	public Frame(){
 		setBounds(0,0,1920,1080);
 		p = new Panel();
@@ -20,6 +28,11 @@ public class Frame extends JFrame{
 		
 	}
 	
+	/**
+	 * main method where nnew frame is created 
+	 * 
+	 * @param args is passed in
+	 */
 	public static void main(String[] args) {
 		Frame f = new Frame();
 		f.setTitle("Missile Command");

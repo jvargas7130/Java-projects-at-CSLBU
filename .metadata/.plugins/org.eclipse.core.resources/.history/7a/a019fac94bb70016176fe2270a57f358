@@ -1,0 +1,26 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+
+public class GuiApp extends JFrame {
+	
+	private DrawingPanel panel;
+	
+	public GuiApp(){
+		setBounds(100, 100, 450, 300); //x,y,w,h
+		panel = new DrawingPanel();
+		getContentPane().add(panel);
+	}
+	
+	
+	public static void main(String [] args){
+		GuiApp f = new GuiApp();
+		f.setTitle("Drawing Demo");
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setVisible(true);
+	}
+	
+	
+
+}

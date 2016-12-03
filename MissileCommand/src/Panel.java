@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Panel crates an rray of six cities, three batteries , and ArrayLIst for
+ * Panel crates an array of six cities, three batteries , and ArrayLIst for
  * temporary object like missiles and explosions.
  * 
  * 
@@ -14,17 +14,60 @@ import java.awt.event.*;
  *
  */
 public class Panel extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
-
+	
+	/**
+	 * city arrray 
+	 */
 	private City city[];
+	
+	/**
+	 * battery array
+	 */
 	private Battery battery[];
+	
+	/**
+	 * Misssile arraylist 
+	 */
 	private ArrayList<Missile> m;
+	
+	/**
+	 * Explosion arraylist
+	 */
 	private ArrayList<Explosion> ex;
+	
+	/**
+	 * Explosion  array chcking clollisions
+	 */
 	private ArrayList<Explosion> collision;
+	
+	/**
+	 * check boolean checks if city is  active
+	 */
+	private Boolean Check[];
+	
+	/*
+	 * Point object points to crosshait
+	 */
 	private Point crossH;
+	
+	/**
+	 * Score keeps track of scores
+	 */
 	private int score = 0;
-
+	
+	/**
+	 * enemy missiles object keeps track of enemy missiles
+	 */
+	private int enemyMissiles = 0;
+	
+	/**
+	 * panel constructor initializes private variables and begins thread
+	 * 
+	 * 
+	 */
 	public Panel() {
-		
+
+		Check = new Boolean[6];
 		collision = new ArrayList<Explosion>();
 		ex = new ArrayList<Explosion>();
 		crossH = new Point(getWidth() + 960, getHeight() + 540);
@@ -32,7 +75,6 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 		city = new City[10];
 		m = new ArrayList<Missile>();
 		// initialize cross hair
-		
 
 		// add mouse motion
 		addMouseMotionListener(this);
@@ -46,7 +88,7 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 		// 6 citys
 		int counter = 0;
 		int xcord = 220;
-		
+
 		for (int i = 0; i < 6; i++) {
 
 			if (counter < 2) {
@@ -63,14 +105,14 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 
 		// 3 Batteries
 		int xcord2 = 0;
-		
+
 		for (int i = 0; i < 3; i++) {
 			battery[i] = new Battery(new Point(xcord2, 905), Color.RED);
 			xcord2 = xcord2 + 880;
 		}
 
 		// missle
-	
+
 		// start point, end point, speed, type, color
 
 		// click misssiles`
@@ -85,14 +127,12 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 				int xcord3 = 0;
 				int ycord3 = 0;
 				int number = 0;
-				int enemyMissiles = 0;
 
 				while (true) {
-				
 
 					int destination = (int) (Math.random() * 2) + 1;
-					
-					//enemy missiles
+
+					// enemy missiles
 					if (count == time) {
 						System.out.println("time" + time);
 						if (destination == 1) {
@@ -110,13 +150,13 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 						// enemy starting point
 						int enemy = (int) (Math.random() * 1080) + 1;
 
-						m.add(new Missile(new Point(enemy, -100), new Point(xcord3, ycord3), 5, 1, Color.RED));
+						m.add(new Missile(new Point(enemy, -100), new Point(xcord3, ycord3), 3, 1, Color.RED));
 						shots = shots + 220;
 						time = time + 300;
 
 						enemyMissiles++;
 						System.out.println(enemyMissiles);
-					}	
+					}
 					count++;
 
 					// missile is active and true
@@ -194,6 +234,12 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 
 					}
 
+					for (int i = 0; i < 6; i++) {
+
+						Check[i] = city[i].isActive();
+
+					}
+
 					// delete city
 
 					repaint();
@@ -203,23 +249,32 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 					} catch (InterruptedException e) {
 
 					}
-					
-				
-					if(enemyMissiles == 6 ){
-						
+
+					boolean destroyed = true;
+					for (int i = 0; i < 6; i++) {
+
+						if (Check[i] == true) {
+							destroyed = false;
+
+						}
+
+					}
+
+					if ((enemyMissiles == 20 ) || destroyed == true) {
+
 						score = 0;
-						enemyMissiles =0;
-						
+						enemyMissiles = 0;
+
 						collision = new ArrayList<Explosion>();
 						ex = new ArrayList<Explosion>();
 						crossH = new Point(getWidth() + 960, getHeight() + 540);
 						battery = new Battery[3];
 						city = new City[10];
 						m = new ArrayList<Missile>();
-						
+
 						int counter = 0;
 						int xcord = 220;
-						
+
 						for (int i = 0; i < 6; i++) {
 
 							if (counter < 2) {
@@ -236,32 +291,35 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 
 						// 3 Batteries
 						int xcord2 = 0;
-						
+
 						for (int i = 0; i < 3; i++) {
 							battery[i] = new Battery(new Point(xcord2, 905), Color.RED);
 							xcord2 = xcord2 + 880;
 						}
 
 					}
-					
+
 				}
 
 			}
 		};
-	
+
 		a.start();
-	
-		
+
 	}
 
+	
+	/**
+	 * paint component draws and fills shapes so they can appear in panel
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+
 		g.setColor(Color.GREEN);
-		g.drawRect( 0,0, 400, 200);//building
-		g.setFont(new Font("Arial", Font.PLAIN,40));
-		g.drawString("SCORE: " + score, 50,50 );
-		
+		g.drawRect(0, 0, 400, 200);// building
+		g.setFont(new Font("Arial", Font.PLAIN, 40));
+		g.drawString("SCORE: " + score, 50, 50);
+		g.drawString("EnemyMissiles: " + enemyMissiles, 50, 100);
 
 		for (int i = 0; i < 6; i++) {
 			if (city[i].isActive() == true) {
@@ -299,9 +357,17 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 		g.drawLine(x, y - 30, x, y + 30);
 
 	}
-
+	
+	/**
+	 * keypress method creates keybopard function keys to 
+	 * begin a command
+	 * @param e event obeject is passed in
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+		
+		//key board key 1
 		if (e.getKeyCode() == KeyEvent.VK_1) {
 			if (battery[0].getNumMissiles() > 0) {
 				m.add(new Missile(new Point(battery[0].x, battery[0].y),
@@ -312,7 +378,8 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 			}
 
 		}
-
+		
+		//keyboard key 2
 		if (e.getKeyCode() == KeyEvent.VK_2) {
 			if (battery[1].getNumMissiles() > 0) {
 				m.add(new Missile(new Point(battery[1].x, battery[1].y),
@@ -322,7 +389,8 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 			}
 
 		}
-
+		
+		//keyboard key 3
 		if (e.getKeyCode() == KeyEvent.VK_3) {
 			if (battery[2].getNumMissiles() > 0) {
 				m.add(new Missile(new Point(battery[2].x, battery[2].y),
@@ -333,7 +401,9 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 			}
 
 		}
-
+		
+		
+		//keyboaerd spacebar key
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			int x2 = (int) crossH.getX();
 			int y2 = (int) crossH.getY();
@@ -360,28 +430,92 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 			System.out.println("size" + size1);
 			System.out.println("size2 +" + size2);
 			System.out.println("size3" + size3);
+			
+			
+			//checks if battery closest to cursor and if battery exist.  
+			if (size1 < size2 && size1 < size3 && battery[0].getNumMissiles() > 0) {
 
-			if (size1 < size2 && size1 < size3) {
-				if (battery[0].getNumMissiles() > 0) {
+				m.add(new Missile(new Point(battery[0].x, battery[0].y),
+						new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+
+				battery[0].removeMissile();
+
+			} else if (size2 < size1 && size2 < size3 && battery[1].getNumMissiles() > 0) {
+
+				m.add(new Missile(new Point(battery[1].x, battery[1].y),
+						new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+				battery[1].removeMissile();
+
+			} else if (size3 < size1 && size3 < size2 && battery[2].getNumMissiles() > 0) {
+
+				m.add(new Missile(new Point(battery[2].x, battery[2].y),
+						new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+				battery[2].removeMissile();
+
+			} else {//checks if battery exist and from closest 
+				int batteries_0 = battery[0].getNumMissiles();
+				int batteries_1 = battery[1].getNumMissiles();
+				int batteries_2 = battery[2].getNumMissiles();
+				if (batteries_0 > 0 && batteries_1 > 0) {
+					if (size1 < size2) {
+						m.add(new Missile(new Point(battery[0].x, battery[0].y),
+								new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+
+						battery[0].removeMissile();
+					} else {
+						m.add(new Missile(new Point(battery[1].x, battery[1].y),
+								new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+
+						battery[1].removeMissile();
+
+					}
+
+				} else if (batteries_0 > 0 && batteries_2 > 0) {
+					if (size1 < size3) {
+						m.add(new Missile(new Point(battery[0].x, battery[0].y),
+								new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+
+						battery[0].removeMissile();
+					} else {
+						m.add(new Missile(new Point(battery[2].x, battery[2].y),
+								new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+
+						battery[2].removeMissile();
+
+					}
+
+				} else if (batteries_1 > 0 && batteries_2 > 0) {
+					if (size2 < size3) {
+						m.add(new Missile(new Point(battery[1].x, battery[1].y),
+								new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+
+						battery[1].removeMissile();
+					} else {
+						m.add(new Missile(new Point(battery[2].x, battery[2].y),
+								new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+
+						battery[2].removeMissile();
+
+					}
+
+				} else if (batteries_0 > 0) {
 					m.add(new Missile(new Point(battery[0].x, battery[0].y),
 							new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
 
 					battery[0].removeMissile();
-				}
 
-			} else if (size2 < size1 && size2 < size3) {
-				if (battery[1].getNumMissiles() > 0) {
+				} else if (batteries_1 > 0) {
 					m.add(new Missile(new Point(battery[1].x, battery[1].y),
 							new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+
 					battery[1].removeMissile();
 
-				}
-
-			} else if (size3 < size1 && size3 < size2) {
-				if (battery[2].getNumMissiles() > 0) {
+				} else if (batteries_2 > 0) {
 					m.add(new Missile(new Point(battery[2].x, battery[2].y),
 							new Point((int) crossH.getX(), (int) crossH.getY()), 8, 2, Color.WHITE));
+
 					battery[2].removeMissile();
+
 				}
 
 			}
@@ -389,31 +523,61 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 		}
 
 	}
-
+	
+	/**
+	 * key release does a function when releasing 
+	 * key 
+	 * 
+	 * @param e event object
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
+	 * key typed does a function when typing 
+	 * key 
+	 * 
+	 * @param e event object
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
+	 * mouse moved does a function when moving 
+	 * mouse
+	 * 
+	 * @param e event object
+	 */
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// crossH = new Point(getWidth() - 960, getHeight() - 540);
 		crossH = new Point((int) e.getX(), (int) e.getY());
 		System.out.println(crossH);
 	}
-
+	
+	/**
+	 * Mouse dragged does a function when dragging 
+	 * mouse 
+	 * 
+	 * @param e event object
+	 */
 	@Override
 	public void mouseDragged(MouseEvent e) {
 
 	}
-
+	
+	/**
+	 * Mouse clicked does a function when clcking mouse
+	 * 
+	 * 
+	 * @param e event object
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int x2 = (int) e.getX();
@@ -442,27 +606,89 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 		System.out.println("size2 +" + size2);
 		System.out.println("size3" + size3);
 
-		if (size1 < size2 && size1 < size3) {
-			if (battery[0].getNumMissiles() > 0) {
+		if (size1 < size2 && size1 < size3 && battery[0].getNumMissiles() > 0) {
+
+			m.add(new Missile(new Point(battery[0].x, battery[0].y), new Point((int) e.getX(), (int) e.getY()), 8, 2,
+					Color.WHITE));
+
+			battery[0].removeMissile();
+
+		} else if (size2 < size1 && size2 < size3 && battery[1].getNumMissiles() > 0) {
+
+			m.add(new Missile(new Point(battery[1].x, battery[1].y), new Point((int) e.getX(), (int) e.getY()), 8, 2,
+					Color.WHITE));
+			battery[1].removeMissile();
+
+		} else if (size3 < size1 && size3 < size2 && battery[2].getNumMissiles() > 0) {
+
+			m.add(new Missile(new Point(battery[2].x, battery[2].y), new Point((int) e.getX(), (int) e.getY()), 8, 2,
+					Color.WHITE));
+			battery[2].removeMissile();
+
+		} else {
+			int batteries_0 = battery[0].getNumMissiles();
+			int batteries_1 = battery[1].getNumMissiles();
+			int batteries_2 = battery[2].getNumMissiles();
+			if (batteries_0 > 0 && batteries_1 > 0) {
+				if (size1 < size2) {
+					m.add(new Missile(new Point(battery[0].x, battery[0].y), new Point((int) e.getX(), (int) e.getY()),
+							8, 2, Color.WHITE));
+
+					battery[0].removeMissile();
+				} else {
+					m.add(new Missile(new Point(battery[1].x, battery[1].y), new Point((int) e.getX(), (int) e.getY()),
+							8, 2, Color.WHITE));
+
+					battery[1].removeMissile();
+
+				}
+
+			} else if (batteries_0 > 0 && batteries_2 > 0) {
+				if (size1 < size3) {
+					m.add(new Missile(new Point(battery[0].x, battery[0].y), new Point((int) e.getX(), (int) e.getY()),
+							8, 2, Color.WHITE));
+
+					battery[0].removeMissile();
+				} else {
+					m.add(new Missile(new Point(battery[2].x, battery[2].y), new Point((int) e.getX(), (int) e.getY()),
+							8, 2, Color.WHITE));
+
+					battery[2].removeMissile();
+
+				}
+
+			} else if (batteries_1 > 0 && batteries_2 > 0) {
+				if (size2 < size3) {
+					m.add(new Missile(new Point(battery[1].x, battery[1].y), new Point((int) e.getX(), (int) e.getY()),
+							8, 2, Color.WHITE));
+
+					battery[1].removeMissile();
+				} else {
+					m.add(new Missile(new Point(battery[2].x, battery[2].y), new Point((int) e.getX(), (int) e.getY()),
+							8, 2, Color.WHITE));
+
+					battery[2].removeMissile();
+
+				}
+
+			} else if (batteries_0 > 0) {
 				m.add(new Missile(new Point(battery[0].x, battery[0].y), new Point((int) e.getX(), (int) e.getY()), 8,
 						2, Color.WHITE));
 
 				battery[0].removeMissile();
-			}
 
-		} else if (size2 < size1 && size2 < size3) {
-
-			if (battery[1].getNumMissiles() > 0) {
+			} else if (batteries_1 > 0) {
 				m.add(new Missile(new Point(battery[1].x, battery[1].y), new Point((int) e.getX(), (int) e.getY()), 8,
 						2, Color.WHITE));
-				battery[1].removeMissile();
-			}
 
-		} else if (size3 < size1 && size3 < size2) {
-			if (battery[2].getNumMissiles() > 0) {
+				battery[1].removeMissile();
+
+			} else if (batteries_2 > 0) {
 				m.add(new Missile(new Point(battery[2].x, battery[2].y), new Point((int) e.getX(), (int) e.getY()), 8,
 						2, Color.WHITE));
+
 				battery[2].removeMissile();
+
 			}
 
 		}
@@ -475,31 +701,47 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 		}
 
 	}
-	
-	
 
-	public static void chooseCord() {
 
-	}
-
+	/**
+	 *Mouse entered does a function when mouse is entered 
+	 *  
+	 * 
+	 * @param e event object
+	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
+	 * Mouse exited does a function when mouse is exited
+	 * 
+	 * @param e event object
+	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
+	 * Mouse pressed does a function when mouse is presssed
+	 * 
+	 * @param e event object
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
+	 * Mouse release does a function when mouse is released
+	 * 
+	 * @param e event object
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub

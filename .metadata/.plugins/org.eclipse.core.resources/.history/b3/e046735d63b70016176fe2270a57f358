@@ -1,0 +1,26 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+
+public class GuiApp extends JFrame {
+	
+	private Panel panel;
+	
+	public GuiApp(){
+		setBounds(0, 0, 1900, 1080); //x,y,w,h
+		panel = new Panel();
+		getContentPane().add(panel);
+	}
+	
+	
+	public static void main(String [] args){
+		GuiApp f = new GuiApp();
+		f.setTitle("Pokemon Mind Reader");
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setVisible(true);
+	}
+	
+	
+
+}

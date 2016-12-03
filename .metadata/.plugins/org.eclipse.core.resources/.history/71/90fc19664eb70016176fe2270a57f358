@@ -1,0 +1,153 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+public class Panel extends JPanel implements ActionListener,MouseListener,MouseMotionListener,KeyListener {
+	JTextField tfInfo;
+	JLabel lblColor, lblShapes;
+	JCheckBox cbRed, cbBlue;
+	ButtonGroup shapes;
+	JRadioButton rbCircle, rbSquare;
+	JButton btnSubmit;
+	
+	
+	public Panel(){
+		setLayout(new FlowLayout(FlowLayout.CENTER));
+	
+		lblColor = new JLabel("Colors");
+		lblShapes = new JLabel("Shapes");
+		shapes =  new ButtonGroup();
+		
+		btnSubmit = new JButton("Fire");
+		btnSubmit = new JButton("Water");
+		btnSubmit = new JButton("Grass");
+		btnSubmit.addActionListener(this);
+
+		add(lblColor);
+	
+		//add(lblShapes);
+		//add(rbCircle);
+		//add(rbSquare);
+		add(btnSubmit);
+
+		//shapes.add(rbCircle);
+		//shapes.add(rbSquare);
+		
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == btnSubmit){
+			if(rbCircle.isSelected()){
+				tfInfo.setText("Purple");
+			}else if(rbSquare.isSelected()){
+				tfInfo.setText("Purple square");
+			}
+			
+		}else if(cbRed.isSelected()){
+			if(rbCircle.isSelected()){
+				tfInfo.setText("Red Circle");
+			}else if(rbSquare.isSelected()){
+				tfInfo.setText("Red square");
+			}
+			
+		}
+		
+	}
+
+}
