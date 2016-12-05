@@ -1,0 +1,112 @@
+
+import java.net.*;
+import java.io.*;
+import java.util.Scanner;
+
+/**
+ * Server chat program uses thread to receive data
+ * 
+ * 
+ * @author jvarg
+ *
+ */
+public class ServerChat extends Thread{
+	
+	
+	private char pred;
+	
+	/**
+	 * used to create a new server
+	 */
+	private ServerSocket server;
+
+	/**
+	 * used to create a connection with client
+	 */
+	private Socket sock;
+
+	/**
+	 * used to receive messages
+	 */
+	private BufferedReader read;
+
+	/**
+	 * used to write messages to client
+	 */
+	private PrintStream write;
+
+	/**
+	 * Server chat method makes sure there is a connection bettween server and client
+	 * 
+	 */
+	public ServerChat() {
+		
+
+		
+		
+		try {
+			server = new ServerSocket(1235);
+			System.out.println("Waiting ....");
+			sock = server.accept();
+			read = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+
+			write = new PrintStream(sock.getOutputStream());
+			System.out.println("Connected");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	
+
+	}
+		
+	/**
+	 * public void run receives client messages
+	 * 
+	 */
+	public void run() {
+		
+		Computer c = new Computer();
+		while (true) {
+			try {
+				System.out.println("Client:" + read.readLine());
+			
+			 pred = c.makePrediction(read.readLine());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
+	
+	/**
+	 * Write method writes messages to client
+	 * 
+	 */
+	public void write (){
+		Scanner in = new Scanner (System.in);
+		while(true){
+			System.out.println("Server ->");
+		
+			String str = "" + pred;
+
+
+	
+			write.println(str);
+		}
+	}
+	
+	/**
+	 * main starts the server and writes
+	 * 
+	 * @param args
+	 */
+	public static void main(String args[]){
+		ServerChat chat = new ServerChat();
+		chat.start();
+		chat.write();
+		
+	}
+	
+	
+}

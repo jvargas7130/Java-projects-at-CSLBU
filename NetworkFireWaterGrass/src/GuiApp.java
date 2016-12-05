@@ -8,7 +8,6 @@ public class GuiApp extends JFrame {
 	private Clientchat panel;
 	
 	public GuiApp(){
-		System.out.println("what");
 		setBounds(0, 0, 1900, 1080); //x,y,w,h
 		panel = new Clientchat();
 		getContentPane().add(panel);

@@ -6,8 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Clientchat extends JPanel implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
-	
-	
+
 	JTextField tfInfo;
 	JLabel lblColor, lblShapes;
 	JCheckBox cbRed, cbBlue;
@@ -16,6 +15,13 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 	JButton fire;
 	JButton water;
 	JButton grass;
+
+	private char player;
+	private int compScore;
+	private int playScore;
+	private char c;
+	private char playerChose;
+	private char computerChose;
 
 	/**
 	 * used to create a connection with client
@@ -39,8 +45,10 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 	 */
 	public Clientchat() {
 
-		fire = new JButton(
-				new ImageIcon(new ImageIcon("./fire.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+		// fire = new JButton(new ImageIcon(new
+		// ImageIcon("./fire.png").getImage().getScaledInstance(40, 40,
+		// Image.SCALE_DEFAULT)));
+		fire = new JButton("fire");
 		water = new JButton("Water");
 		grass = new JButton("Grass");
 
@@ -52,9 +60,11 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 		add(water);
 		add(grass);
 
+	
 		try {
+
 			System.out.println("Requesting Connection.....");
-			sock = new Socket("localhost", 1234);
+			sock = new Socket("localhost", 1235);
 			read = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			write = new PrintStream(sock.getOutputStream());
 			System.out.println("Connected.");
@@ -63,10 +73,20 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 		}
 
 		Thread a = new Thread() {
+
 			public void run() {
 				while (true) {
-					try {
+
+					try {	
 						System.out.println("Server:" + read.readLine());
+						c = read.readLine().charAt(0);
+						chooseElement();
+					
+						checkScore();
+						repaint();
+						
+						player = 'n';
+						c = 'n';
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -78,22 +98,131 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 
 	}
 
-	/**
-	 * Write method writes messages to client
-	 * 
-	 */
+	public void paintComponent(Graphics g) {
 
-	/**
-	 * main starts the server and writes
-	 * 
-	 * @param args
-	 */
-	public static void main(String args[]) {
-	
-	
+		super.paintComponent(g);
+
+		g.setColor(Color.GREEN);
+		g.drawRect(0, 0, 400, 200);// building
+		g.setFont(new Font("Arial", Font.PLAIN, 40));
+
+
+		g.drawString("comp" + c, 800, 650);
+		if (playerChose == 'f') {
+			g.drawString("Player chose fire", 800, 300);
+		} else if (playerChose == 'w') {
+			g.drawString("Player chose water ", 800, 300);
+		} else if (playerChose == 'g') {
+			g.drawString("Player chose grass ", 800, 300);
+		} else {
+
+		}
+
+		if (computerChose == 'f') {
+			g.drawString("Computer chose fire", 800, 350);
+		} else if (computerChose == 'w') {
+			g.drawString("Computer chose water ", 800, 350);
+		} else if (computerChose == 'g') {
+			g.drawString("Computer chose grass ", 800, 350);
+		} else {
+
+		}
+
+		g.setFont(new Font("Arial", Font.PLAIN, 40));
 		
+		// 1.fire beats 3.grass
+		// 3.grass beats 2.water
+		// 2.water beats 1.fire
+		if ((playerChose == 'f' && computerChose == 'g') || (playerChose == 'g' && computerChose == 'w')
+				|| (player == 'w' && computerChose == 'f')) {
+
+			g.drawString("Player   Wins ", 850, 500);
+		} else if ((computerChose == 'f' && playerChose == 'g') || (computerChose == 'g' && playerChose == 'w')
+				|| (playerChose == 'w' && computerChose == 'f')) {
+
+			g.drawString("Computer Wins ", 850, 500);
+		} else if((playerChose == 'f' && computerChose == 'f') || (playerChose == 'g' && computerChose == 'g')
+				|| (playerChose == 'w' && computerChose == 'w')){
+			g.drawString("TIE! ", 850, 500);
+		} else {
+
+		}
+
+		g.setFont(new Font("Arial", Font.PLAIN, 40));
+		g.drawString("Computer Score: " + compScore, 50, 50);
+		g.drawString("Player   Score: " + playScore, 50, 100);
+
+		try {
+			Thread.sleep(9); // ~60 fps
+		} catch (InterruptedException e) {
+
+		}
 
 	}
+
+	public static void main(String args[]) {
+
+	}
+
+	public void chooseElement() {
+
+		if (player == 'f') {
+			playerChose = player;
+		} else if (player == 'w') {
+			playerChose = player;
+		} else if (player == 'g') {
+			playerChose = player;
+		} else {
+
+		}
+
+		if (c == 'f') {
+			computerChose = c;
+		} else if (c == 'w') {
+			computerChose = c;
+		} else if (c == 'g') {
+			computerChose = c;
+		} else {
+
+		}
+
+	}
+
+
+
+	public void checkScore() {
+		if ((player == 'f' && c == 'g') || (player == 'g' && c == 'w')
+				|| (player == 'w' && c == 'f')) {
+			playScore++;
+
+		} else if ((c == 'f' && player == 'g') || (c == 'g' && player == 'w')
+				|| (c == 'w' && player == 'f')) {
+			compScore++;
+
+		} else {
+			
+		}
+	}
+
+	/**
+	 * Winner method checks determines the winner
+	 * 
+	 * 
+	 * @param player
+	 *            object is passed in
+	 * 
+	 * @param c
+	 *            computer object is passed in t
+	 * 
+	 * @param pattern
+	 *            string pattern is passed in
+	 * 
+	 * @param computer
+	 *            computer integer is passed in
+	 * 
+	 * @return win integer win choise is returned
+	 */
+
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
@@ -161,20 +290,24 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 		Scanner in = new Scanner(System.in);
 
 		if (e.getSource() == fire) {
-			System.out.println("Client ->");
-			write.println(in.nextLine());
+			player = 'f';
 
-			System.out.println("fire");
+			// char fire = 'f';
+			System.out.println("Client ->");
+			write.println("f");
 
 		} else if (e.getSource() == water) {
+			player = 'w';
+
 			System.out.println("Client ->");
-			write.println(in.nextLine());
-			System.out.println("water");
+			write.println("w");
 
 		} else if (e.getSource() == grass) {
+			player = 'g';
+
 			System.out.println("Client ->");
-			write.println(in.nextLine());
-			System.out.println("grass");
+			write.println("g");
+
 		}
 
 	}

@@ -11,6 +11,10 @@ import java.util.Scanner;
  *
  */
 public class ServerChat extends Thread{
+	
+	
+	private char pred;
+	
 	/**
 	 * used to create a new server
 	 */
@@ -36,11 +40,16 @@ public class ServerChat extends Thread{
 	 * 
 	 */
 	public ServerChat() {
+		
+
+		
+		
 		try {
-			server = new ServerSocket(1234);
+			server = new ServerSocket(1235);
 			System.out.println("Waiting ....");
 			sock = server.accept();
 			read = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+
 			write = new PrintStream(sock.getOutputStream());
 			System.out.println("Connected");
 		} catch (IOException e) {
@@ -50,15 +59,20 @@ public class ServerChat extends Thread{
 	
 
 	}
-		
+	
+	
 	/**
 	 * public void run receives client messages
 	 * 
 	 */
 	public void run() {
+		
+		Computer c = new Computer();
 		while (true) {
 			try {
-				System.out.println("Client:" + read.readLine());
+				//System.out.println("Client888:" + read.readLine());
+			
+			 pred = c.makePrediction(read.readLine());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -73,8 +87,13 @@ public class ServerChat extends Thread{
 	public void write (){
 		Scanner in = new Scanner (System.in);
 		while(true){
-			System.out.println("Server ->");
-			write.println(in.nextLine());
+	
+		
+			String str = "" + pred;
+			System.out.println("Server8888 ->" + str);
+
+	
+			write.println(str);
 		}
 	}
 	

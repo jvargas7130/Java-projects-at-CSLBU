@@ -1,0 +1,153 @@
+import java.net.*;
+import java.io.*;
+import java.util.Scanner;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Clientchat extends JPanel implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
+	
+	
+	JTextField tfInfo;
+	JLabel lblColor, lblShapes;
+	JCheckBox cbRed, cbBlue;
+	ButtonGroup shapes;
+	JRadioButton rbCircle, rbSquare;
+	JButton fire;
+	JButton water;
+	JButton grass;
+
+	/**
+	 * used to create a connection with client
+	 */
+	private Socket sock;
+
+	/**
+	 * used to receive messages
+	 */
+	private BufferedReader read;
+
+	/**
+	 * used to write messages to client
+	 */
+	private PrintStream write;
+
+	/**
+	 * Server chat method makes sure there is a connection bettween server and
+	 * client
+	 * 
+	 */
+	public Clientchat() {
+
+		fire = new JButton(
+				new ImageIcon(new ImageIcon("./fire.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+		water = new JButton("Water");
+		grass = new JButton("Grass");
+
+		fire.addActionListener(this);
+		water.addActionListener(this);
+		grass.addActionListener(this);
+
+		add(fire);
+		add(water);
+		add(grass);
+
+		try {
+			
+			System.out.println("Requesting Connection.....");
+			sock = new Socket("localhost", 1234);
+			read = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+			write = new PrintStream(sock.getOutputStream());
+			System.out.println("Connected.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Thread a = new Thread() {
+			public void run() {
+				while (true) {
+					try {
+						System.out.println("Server:" + read.readLine());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				}
+			}
+		};
+		a.start();
+
+	}
+
+	
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		Scanner in = new Scanner(System.in);
+
+	
+
+	}
+
+}

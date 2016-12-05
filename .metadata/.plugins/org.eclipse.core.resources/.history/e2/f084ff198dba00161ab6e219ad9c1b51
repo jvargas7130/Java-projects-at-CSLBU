@@ -1,0 +1,351 @@
+import java.net.*;
+import java.io.*;
+import java.util.Scanner;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Clientchat extends JPanel implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
+
+	JTextField tfInfo;
+	JLabel lblColor, lblShapes;
+	JCheckBox cbRed, cbBlue;
+	ButtonGroup shapes;
+	JRadioButton rbCircle, rbSquare;
+	JButton fire;
+	JButton water;
+	JButton grass;
+
+	private char player;
+	private int compScore;
+	private int playScore;
+	private int w;
+	private char c;
+	private int paintWinner;
+	private char playerChose;
+	private char computerChose;
+
+	/**
+	 * used to create a connection with client
+	 */
+	private Socket sock;
+
+	/**
+	 * used to receive messages
+	 */
+	private BufferedReader read;
+
+	/**
+	 * used to write messages to client
+	 */
+	private PrintStream write;
+
+	/**
+	 * Server chat method makes sure there is a connection bettween server and
+	 * client
+	 * 
+	 */
+	public Clientchat() {
+
+		// fire = new JButton(new ImageIcon(new
+		// ImageIcon("./fire.png").getImage().getScaledInstance(40, 40,
+		// Image.SCALE_DEFAULT)));
+		fire = new JButton("fire");
+		water = new JButton("Water");
+		grass = new JButton("Grass");
+
+		fire.addActionListener(this);
+		water.addActionListener(this);
+		grass.addActionListener(this);
+
+		add(fire);
+		add(water);
+		add(grass);
+
+	
+		try {
+
+			System.out.println("Requesting Connection.....");
+			sock = new Socket("localhost", 1235);
+			read = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+			write = new PrintStream(sock.getOutputStream());
+			System.out.println("Connected.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Thread a = new Thread() {
+
+			public void run() {
+				while (true) {
+
+					try {
+						System.out.println("Server:" + read.readLine());
+						c = read.readLine().charAt(0);
+						w = 0;
+						winner();
+						paintWinner();
+						checkScore();
+						chooseElement();
+						repaint();
+						
+						player = 'n';
+						c = 'n';
+
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				}
+			}
+		};
+		a.start();
+
+	}
+
+	public void paintComponent(Graphics g) {
+
+		super.paintComponent(g);
+
+		g.setColor(Color.GREEN);
+		g.drawRect(0, 0, 400, 200);// building
+		g.setFont(new Font("Arial", Font.PLAIN, 40));
+
+		g.drawString("Player" + player, 800, 600);
+		g.drawString("comp" + c, 800, 650);
+		if (playerChose == 'f') {
+			g.drawString("Player chose fire", 800, 300);
+		} else if (playerChose == 'w') {
+			g.drawString("Player chose water ", 800, 300);
+		} else if (playerChose == 'g') {
+			g.drawString("Player chose grass ", 800, 300);
+		} else {
+
+		}
+
+		if (computerChose == 'f') {
+			g.drawString("Computer chose fire", 800, 350);
+		} else if (computerChose == 'w') {
+			g.drawString("Computer chose water ", 800, 350);
+		} else if (computerChose == 'g') {
+			g.drawString("Computer chose grass ", 800, 350);
+		} else {
+
+		}
+
+		g.setFont(new Font("Arial", Font.PLAIN, 40));
+		
+		// 1.fire beats 3.grass
+		// 3.grass beats 2.water
+		// 2.water beats 1.fire
+		if (paintWinner == 1) {
+
+			g.drawString("Player   Wins ", 850, 500);
+		} else if (paintWinner == -1) {
+
+			g.drawString("Computer Wins ", 850, 500);
+		} else if (paintWinner == 2) {
+			g.drawString("TIE! ", 850, 500);
+		} else {
+
+		}
+
+		g.setFont(new Font("Arial", Font.PLAIN, 40));
+		g.drawString("Computer Score: " + compScore, 50, 50);
+		g.drawString("Player   Score: " + playScore, 50, 100);
+
+		try {
+			Thread.sleep(9); // ~60 fps
+		} catch (InterruptedException e) {
+
+		}
+
+	}
+
+	public static void main(String args[]) {
+
+	}
+
+	public void chooseElement() {
+
+		if (player == 'f') {
+			playerChose = player;
+		} else if (player == 'w') {
+			playerChose = player;
+		} else if (player == 'g') {
+			playerChose = player;
+		} else {
+
+		}
+
+		if (c == 'f') {
+			computerChose = c;
+		} else if (c == 'w') {
+			computerChose = c;
+		} else if (c == 'g') {
+			computerChose = c;
+		} else {
+
+		}
+
+	}
+
+	public void paintWinner() {
+		if (w == 1) {
+			paintWinner = w;
+
+		} else if (w == -1) {
+			paintWinner = w;
+
+		} else if (w == 2) {
+			paintWinner = w;
+		}
+	}
+
+	public void checkScore() {
+		if (w == 1) {
+			playScore++;
+
+		} else if (w == -1) {
+			compScore++;
+
+		} else {
+
+		}
+	}
+
+	/**
+	 * Winner method checks determines the winner
+	 * 
+	 * 
+	 * @param player
+	 *            object is passed in
+	 * 
+	 * @param c
+	 *            computer object is passed in t
+	 * 
+	 * @param pattern
+	 *            string pattern is passed in
+	 * 
+	 * @param computer
+	 *            computer integer is passed in
+	 * 
+	 * @return win integer win choise is returned
+	 */
+	public void winner() {
+
+
+		// 1.fire beats 3.grass
+		// 3.grass beats 2.water
+		// 2.water beats 1.fire
+
+		if ((player == 'f' && c == 'g') || (player == 'g' && c == 'w')
+				|| (player == 'w' && c == 'f')) {// player
+			// wins
+			System.out.println("player wins");
+			w = 1;
+		} else if ((c == 'f' && player == 'g') || (c == 'g' && player == 'w')
+				|| (c == 'w' && player == 'f')) {// computer
+			// wins
+			System.out.println("Computer wins");
+			w = -1;
+		} else if ((player == 'f' && c == 'f') || (player == 'g' && c == 'g')
+				|| (player == 'w' && c == 'w')) {// ti3
+			w = 2;
+			System.out.println("tie");
+		} else {
+
+		}
+		System.out.println();
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		Scanner in = new Scanner(System.in);
+
+		if (e.getSource() == fire) {
+			player = 'f';
+
+			// char fire = 'f';
+			System.out.println("Client ->");
+			write.println("f");
+
+		} else if (e.getSource() == water) {
+			player = 'w';
+
+			System.out.println("Client ->");
+			write.println("w");
+
+		} else if (e.getSource() == grass) {
+			player = 'g';
+
+			System.out.println("Client ->");
+			write.println("g");
+
+		}
+
+	}
+
+}

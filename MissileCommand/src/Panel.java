@@ -245,7 +245,7 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener,
 					repaint();
 
 					try {
-						Thread.sleep(9); // ~60 fps
+						Thread.sleep(60); // ~60 fps
 					} catch (InterruptedException e) {
 
 					}

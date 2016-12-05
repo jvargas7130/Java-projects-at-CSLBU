@@ -44,9 +44,9 @@ public class Computer implements Serializable {
 	 *          
 	 * @return prediction of player
 	 */
-	public int makePrediction(String newP) {
+	public char makePrediction(String newP) {
 
-		int prediction = 0;
+		char prediction = ' ';
 
 		if (!description.isEmpty()) {
 
@@ -86,26 +86,42 @@ public class Computer implements Serializable {
 
 			// fire
 			if ((description.get(pat1) > description.get(pat2)) && (description.get(pat1) > description.get(pat3))) {
-				prediction = 2;// water beats fire
+				prediction = 'w';// water beats fire
 
 				// water
 			} else if ((description.get(pat2) > description.get(pat1))
 					&& (description.get(pat2) > description.get(pat3))) {
-				prediction = 3;// grass beats water
+				prediction = 'g';// grass beats water
 
 				// grass
 			} else if ((description.get(pat3) > description.get(pat1))
 					&& (description.get(pat3) > description.get(pat2))) {
-				prediction = 1;// vfire beats grass
+				prediction = 'f';// vfire beats grass
 			} else {
 				int randChoice = (int) (Math.random() * 3) + 1;
-				prediction = randChoice;
+				
+				if(randChoice == 1){
+					prediction = 'f';
+				}else if(randChoice == 2){
+					prediction = 'g';
+				}else if(randChoice == 3){
+					prediction = 'g';
+				}
+				
+		
 			}
 
 		} else {
 			int randChoice = (int) (Math.random() * 3) + 1;
 			System.out.println("rand" + randChoice);
-			prediction = randChoice;
+			if(randChoice == 1){
+				prediction = 'f';
+			}else if(randChoice == 2){
+				prediction = 'g';
+			}else if(randChoice == 3){
+				prediction = 'g';
+			}
+			
 		}
 
 		return prediction;
