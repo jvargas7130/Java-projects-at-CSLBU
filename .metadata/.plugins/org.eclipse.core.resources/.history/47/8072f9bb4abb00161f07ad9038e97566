@@ -1,0 +1,232 @@
+
+import java.net.*;
+import java.io.*;
+import java.util.Scanner;
+
+/**
+ * Server chat program uses thread to receive data
+ * 
+ * 
+ * @author jvarg
+ *
+ */
+public class ServerChat extends Thread {
+
+	private int pWins = 0;
+	private int cWins = 0;
+	private String pattern = "";
+	private char player;
+	private char computer;
+	private int win;
+	private String winner;
+
+	/**
+	 * used to create a new server
+	 */
+	private ServerSocket server;
+
+	/**
+	 * used to create a connection with client
+	 */
+	private Socket sock;
+
+	/**
+	 * used to receive messages
+	 */
+	private BufferedReader read;
+
+	/**
+	 * used to write messages to client
+	 */
+	private PrintStream write;
+
+	/**
+	 * ReadFile method The file is read in
+	 * 
+	 * @param game
+	 *            object game is read in
+	 * 
+	 * @return the computer object
+	 */
+	public Computer readFile() {
+		boolean file = false;
+		Computer c = null;
+
+		File f = new File("Pokemon.Dat");
+
+		if (f.exists()) {
+			try {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
+				c = (Computer) in.readObject();
+				in.close();
+			} catch (IOException e) {
+				System.out.println("Error processing file.");
+			} catch (ClassNotFoundException e) {
+				System.out.println("Could not find class.");
+			}
+
+		} else {
+			c = new Computer();
+
+		}
+
+		return c;
+
+	}
+
+	/**
+	 * Server chat method makes sure there is a connection bettween server and
+	 * client
+	 * 
+	 */
+	public ServerChat() {
+
+		try {
+			server = new ServerSocket(1235);
+			System.out.println("Waiting ....");
+			sock = server.accept();
+			read = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+
+			write = new PrintStream(sock.getOutputStream());
+
+			System.out.println("Connected");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * public void run receives client messages
+	 * 
+	 */
+	public void run() {
+
+		Computer c = readFile();
+		try {
+			pattern = c.getPattern();
+
+		} catch (NullPointerException e) {
+			pattern = "";
+
+		}
+
+		while (true) {
+			try {
+				// System.out.println("Client888:" + read.readLine());
+
+				pattern += read.readLine();
+				player = pattern.charAt(0);
+
+				// pred = c.makePrediction(read.readLine());
+				System.out.println("player: " + player);
+				System.out.println("pattern: " + pattern);
+				if (pattern.length() == 4) {
+				
+
+					System.out.println(pattern);
+					computer = c.makePrediction(pattern);
+					c.storePattern(new Pattern(pattern));
+					pattern = pattern.substring(1);
+				} else {
+					int randChoice = (int) (Math.random() * 3) + 1;
+					System.out.println("rand" + randChoice);
+					if (randChoice == 1) {
+						computer = 'f';
+					} else if (randChoice == 2) {
+						computer = 'g';
+					} else if (randChoice == 3) {
+						computer = 'g';
+					}
+				}
+
+				winner();// chooses winner
+							// and returns
+							// value
+
+				if (win == 1) {// player wins
+					pWins++;
+
+				} else if (win == -1) {// computer wins
+					cWins++;
+
+				} else {
+
+				}
+				write();
+				writeGame(c);// save game every round
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+	/**
+	 * Write method writes messages to client
+	 * 
+	 */
+	public void write() {
+		Scanner in = new Scanner(System.in);
+
+		if (win == 1) {// player wins
+			winner = "Player wins";
+
+		} else if (win == -1) {// computer wins
+			winner = "Computer wins";
+		} else {
+			winner = "Tie";
+		}
+
+		String str = computer + "," + player + "," + winner + "," + pWins + "," + cWins;
+		// System.out.println("Server8888 ->" + str);
+
+		write.println(str);
+	}
+
+	public void winner() {
+
+		if ((player == 'f' && computer == 'g') || (player == 'g' && computer == 'w')
+				|| (player == 'w' && computer == 'f')) {
+
+			win = 1;
+		} else if ((computer == 'f' && player == 'g') || (computer == 'g' && player == 'w')
+				|| (computer == 'w' && player == 'f')) {
+
+			win = -1;
+		} else if ((player == 'f' && computer == 'f') || (player == 'g' && computer == 'g')
+				|| (player == 'w' && computer == 'w')) {
+			win = 0;
+		}
+	}
+
+	/**
+	 * main starts the server and writes
+	 * 
+	 * @param args
+	 */
+	public static void main(String args[]) {
+		ServerChat chat = new ServerChat();
+		chat.start();
+
+	}
+
+	/**
+	 * Write game method writes the game and stores it in a file
+	 * 
+	 * @param c
+	 *            passes in computer object
+	 * 
+	 */
+	public void writeGame(Computer c) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Pokemon.Dat"));
+			out.writeObject(c);
+			out.close();
+		} catch (IOException e) {
+			System.out.println("Error processing file.");
+		}
+	}
+
+}

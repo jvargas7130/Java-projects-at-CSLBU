@@ -16,12 +16,15 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 	JButton water;
 	JButton grass;
 
-	private char player;
-	private int compScore;
-	private int playScore;
-	private char c;
-	private char playerChose;
-	private char computerChose;
+	private String player;
+	private String computer;
+
+
+
+	private String winner = "dontpaint";
+
+	private String pwins;
+	private String cwins;
 
 	/**
 	 * used to create a connection with client
@@ -60,7 +63,6 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 		add(water);
 		add(grass);
 
-	
 		try {
 
 			System.out.println("Requesting Connection.....");
@@ -71,22 +73,27 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		// String str = "" + computer +""  player + winner + "" + pWins + "" + cWins ;
 		Thread a = new Thread() {
 
 			public void run() {
 				while (true) {
 
-					try {	
-						System.out.println("Server:" + read.readLine());
-						c = read.readLine().charAt(0);
-						chooseElement();
-					
-						checkScore();
-						repaint();
+					try {
 						
-						player = 'n';
-						c = 'n';
+
+						String line = read.readLine();
+						String[] tokens = line.split(",");
+						computer = tokens[0];
+						player = tokens[1];
+						winner = tokens[2];
+						pwins = tokens[3];
+						cwins = tokens[4];
+
+						repaint();
+
+						// player = 'n';
+						// c = 'n';
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -100,129 +107,65 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 
 	public void paintComponent(Graphics g) {
 
+
 		super.paintComponent(g);
 
-		g.setColor(Color.GREEN);
-		g.drawRect(0, 0, 400, 200);// building
-		g.setFont(new Font("Arial", Font.PLAIN, 40));
-
-
-		g.drawString("comp" + c, 800, 650);
-		if (playerChose == 'f') {
-			g.drawString("Player chose fire", 800, 300);
-		} else if (playerChose == 'w') {
-			g.drawString("Player chose water ", 800, 300);
-		} else if (playerChose == 'g') {
-			g.drawString("Player chose grass ", 800, 300);
-		} else {
-
+			
+		if(!winner.equals("dontpaint") ){
+			g.setColor(Color.GREEN);
+			g.drawRect(0, 0, 400, 200);// building
+			g.setFont(new Font("Arial", Font.PLAIN, 40));
+	
+			if (player.equals("f")) {
+				g.drawString("Player chose fire", 800, 300);
+			} else if (player.equals("w")) {
+				g.drawString("Player chose water ", 800, 300);
+			} else if (player.equals("g")) {
+				g.drawString("Player chose grass ", 800, 300);
+			} else {
+	
+			}
+	
+			if (computer.equals("f")) {
+				g.drawString("Computer chose fire", 800, 350);
+			} else if (computer.equals("w")) {
+				g.drawString("Computer chose water ", 800, 350);
+			} else if (computer.equals("g")) {
+				g.drawString("Computer chose grass ", 800, 350);
+			} else {
+	
+			}
+	
+			g.setFont(new Font("Arial", Font.PLAIN, 40));
+	
+			// 1.fire beats 3.grass
+			// 3.grass beats 2.water
+			// 2.water beats 1.fire
+			if (winner.equals("Player wins")) {
+	
+				g.drawString("Player   Wins ", 850, 500);
+			} else if (winner.equals("Computer wins")) {
+	
+				g.drawString("Computer Wins ", 850, 500);
+			} else if (winner.equals("Tie")) {
+				g.drawString("TIE! ", 850, 500);
+			} else {
+	
+			}
+	
+			g.setFont(new Font("Arial", Font.PLAIN, 40));
+			g.drawString("Computer Score: " + cwins, 50, 50);
+			g.drawString("Player   Score: " + pwins, 50, 100);
+		}
 		}
 
-		if (computerChose == 'f') {
-			g.drawString("Computer chose fire", 800, 350);
-		} else if (computerChose == 'w') {
-			g.drawString("Computer chose water ", 800, 350);
-		} else if (computerChose == 'g') {
-			g.drawString("Computer chose grass ", 800, 350);
-		} else {
-
-		}
-
-		g.setFont(new Font("Arial", Font.PLAIN, 40));
-		
-		// 1.fire beats 3.grass
-		// 3.grass beats 2.water
-		// 2.water beats 1.fire
-		if ((playerChose == 'f' && computerChose == 'g') || (playerChose == 'g' && computerChose == 'w')
-				|| (player == 'w' && computerChose == 'f')) {
-
-			g.drawString("Player   Wins ", 850, 500);
-		} else if ((computerChose == 'f' && playerChose == 'g') || (computerChose == 'g' && playerChose == 'w')
-				|| (playerChose == 'w' && computerChose == 'f')) {
-
-			g.drawString("Computer Wins ", 850, 500);
-		} else if((playerChose == 'f' && computerChose == 'f') || (playerChose == 'g' && computerChose == 'g')
-				|| (playerChose == 'w' && computerChose == 'w')){
-			g.drawString("TIE! ", 850, 500);
-		} else {
-
-		}
-
-		g.setFont(new Font("Arial", Font.PLAIN, 40));
-		g.drawString("Computer Score: " + compScore, 50, 50);
-		g.drawString("Player   Score: " + playScore, 50, 100);
-
-		try {
-			Thread.sleep(9); // ~60 fps
-		} catch (InterruptedException e) {
-
-		}
-
-	}
+	
 
 	public static void main(String args[]) {
 
 	}
 
-	public void chooseElement() {
-
-		if (player == 'f') {
-			playerChose = player;
-		} else if (player == 'w') {
-			playerChose = player;
-		} else if (player == 'g') {
-			playerChose = player;
-		} else {
-
-		}
-
-		if (c == 'f') {
-			computerChose = c;
-		} else if (c == 'w') {
-			computerChose = c;
-		} else if (c == 'g') {
-			computerChose = c;
-		} else {
-
-		}
-
-	}
-
-
-
-	public void checkScore() {
-		if ((player == 'f' && c == 'g') || (player == 'g' && c == 'w')
-				|| (player == 'w' && c == 'f')) {
-			playScore++;
-
-		} else if ((c == 'f' && player == 'g') || (c == 'g' && player == 'w')
-				|| (c == 'w' && player == 'f')) {
-			compScore++;
-
-		} else {
-			
-		}
-	}
-
-	/**
-	 * Winner method checks determines the winner
-	 * 
-	 * 
-	 * @param player
-	 *            object is passed in
-	 * 
-	 * @param c
-	 *            computer object is passed in t
-	 * 
-	 * @param pattern
-	 *            string pattern is passed in
-	 * 
-	 * @param computer
-	 *            computer integer is passed in
-	 * 
-	 * @return win integer win choise is returned
-	 */
-
+	
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
@@ -290,23 +233,23 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 		Scanner in = new Scanner(System.in);
 
 		if (e.getSource() == fire) {
-			player = 'f';
+			player = "f";
 
 			// char fire = 'f';
 			System.out.println("Client ->");
-			write.println("f");
+			write.println(player);
 
 		} else if (e.getSource() == water) {
-			player = 'w';
+			player = "w";
 
 			System.out.println("Client ->");
-			write.println("w");
+			write.println(player);
 
 		} else if (e.getSource() == grass) {
-			player = 'g';
+			player = "g";
 
 			System.out.println("Client ->");
-			write.println("g");
+			write.println(player);
 
 		}
 

@@ -161,7 +161,7 @@ public class PokeTester {
 	 * @param pattern passes in string patter
 	 *           
 	 * @param computer passes in computer int choice
-	 *            
+	 *             
 	 * @return pattern string pattern
 	 */
 	public static String playGame(int player, String pattern, int computer) {
