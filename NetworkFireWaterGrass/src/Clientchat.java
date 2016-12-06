@@ -51,9 +51,9 @@ public class Clientchat extends JPanel implements ActionListener, MouseListener,
 		// fire = new JButton(new ImageIcon(new
 		// ImageIcon("./fire.png").getImage().getScaledInstance(40, 40,
 		// Image.SCALE_DEFAULT)));
-		fire = new JButton("fire");
-		water = new JButton("Water");
-		grass = new JButton("Grass");
+		fire = new JButton(new ImageIcon(new ImageIcon("./fire.png").getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
+		water = new JButton(new ImageIcon(new ImageIcon("./water.png").getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
+		grass = new JButton(new ImageIcon(new ImageIcon("./grass.png").getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
 
 		fire.addActionListener(this);
 		water.addActionListener(this);
